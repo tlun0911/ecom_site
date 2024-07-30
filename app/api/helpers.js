@@ -50,9 +50,8 @@ export async function getProductById(id) {
 
 export async function getAllProductIds() {
   // Fetch or generate the list of product IDs
-  const products = getAllProductsNoLimit();
-  const productData = await products.json();
-  return productData.map(product => product.id);
+  const products = await getAllProductsNoLimit();
+  return products.map(product => product.id);
 }
 
 
