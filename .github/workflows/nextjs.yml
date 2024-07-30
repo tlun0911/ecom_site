@@ -62,7 +62,7 @@ jobs:
       - name: Build with Next.js
         run: |
           echo "Introducing delay to avoid rate limits..."
-          sleep 10
+          sleep 30
           ${{ steps.detect-package-manager.outputs.runner }} next build
 
       - name: Upload artifact
