@@ -1,71 +1,97 @@
-'use client';
+"use client";
 import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import ProductCard from "../components/ProductCard";
 
-const ProductList = ({ products, categories, page = 1, limit = 10 }) => {
-  
-  let previous;
-  let next;
+const ProductList = ({ products, departments }) => {
+  const [visibleProducts, setVisibleProducts] = useState([]);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 9; // Number of products to show per page
+  const observer = useRef();
+  const lastProductElementRef = useRef();
 
-  if (page > 1 ) {
-    previous = (
-      <Link href={`products/?page=${page - 1}`}>
-        <button className="bg-gray-900 text-white w-40 px-4 py-2 rounded-md">
-          Previous Page
-        </button>
-      </Link>
-    );
-  } else {
-    previous = <div></div>;
-  }
+  useEffect(() => {
+    // Initially load the first set of products
+    setVisibleProducts(products.slice(0, limit));
+  }, [products]);
 
-  if (products.length < limit) {
-    next = <div></div>;
-  } else {
-    next = (
-      <Link href={`products/?page=${page + 1}`}>
-        <button className="bg-gray-900 text-white w-40 px-4 py-2 rounded-md">
-          Next Page
-        </button>
-      </Link>
-    );
-  }
+  const loadMoreProducts = () => {
+    const nextPage = page + 1;
+    const newVisibleProducts = products.slice(0, nextPage * limit);
+    setVisibleProducts(newVisibleProducts);
+    setPage(nextPage);
+  };
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
+  useEffect(() => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreProducts();
+      }
+    });
+    if (lastProductElementRef.current) {
+      observer.current.observe(lastProductElementRef.current);
+    }
+  }, [visibleProducts]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4">
-      <aside className="lg:col-span-3 bg-gray-100 p-4">
-        <h2 className="text-xl font-bold mb-4">Sort Options</h2>
+      <div className="lg:col-span-3 bg-gray-100 p-4">
+        <h2 className="hidden lg:visible text-xl font-bold mb-4">Filter Options</h2>
         {/* Add your sort options here */}
-        <ul>
-          <li>
-            <h3>Categories</h3>
-            <ul>
-              {categories?.map((category) => (
-                <li key={category}>
-                  <button>{category}</button>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li>
-            <button>Sort by Rating</button>
-          </li>
-          <li>
-            <button>Sort by Name</button>
-          </li>
-        </ul>
-      </aside>
-      <main className="lg:col-span-9  content-center">
-        <div className="grid lg:grid-cols-2 gap-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+        <button
+          className="lg:hidden w-full mb-2 p-2 bg-blue-500 text-white rounded"
+          onClick={toggleFilterVisibility}
+        >
+          {isFilterVisible ? "Hide Filters" : "Filter"}
+        </button>
+        <div className={`lg:block ${isFilterVisible ? "block" : "hidden"}`}>
+          <ul>
+            <li>
+              <h3 className="text-base font-semibold mb-2">Departments</h3>
+              <ul className="h-72 overflow-y-scroll border-2 border-gray-900 border-opacity-50 p-2">
+                {departments?.map((department) => (
+                  <li key={department} className="mb-2">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox h-5 w-5 text-gray-600"
+                      />
+                      <span className="ml-2 text-gray-700">{department}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </li>
+            <li>
+              <button>Sort by Rating</button>
+            </li>
+            <li>
+              <button>Sort by Name</button>
+            </li>
+          </ul>
         </div>
-        <div className="flex justify-center space-x-6 mt-6">
-          {previous}
-          {next}
+      </div>
+      <div className="lg:col-span-9">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {visibleProducts.map((product, index) => {
+            if (visibleProducts.length === index + 1) {
+              return (
+                <div ref={lastProductElementRef} key={product.id}>
+                  <ProductCard product={product} />
+                </div>
+              );
+            } else {
+              return <ProductCard key={product.id} product={product} />;
+            }
+          })}
         </div>
-      </main>
+      </div>
     </div>
   );
 };

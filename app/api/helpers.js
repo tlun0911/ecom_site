@@ -48,6 +48,8 @@ export async function getProductById(id) {
   return product;
 }
 
+
+
 export function randomImage(width = 400, height = 400) {
   const min = 1;
   const max = 100;
@@ -86,4 +88,10 @@ export async function getCategories() {
     console.error("Error fetching categories:", error);
     return [];
   }
+}
+
+export async function getProductsByCategory(category) {
+  const products = await getAllProducts();
+  const filteredProducts = products.filter((product) => product.department === category);
+  return filteredProducts;
 }

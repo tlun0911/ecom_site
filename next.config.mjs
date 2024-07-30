@@ -16,9 +16,9 @@ const nextConfig = {
           },
           {
             protocol: 'https',
-            hostname: 'i.ibb.co',
+            hostname: 'source.unsplash.com',
             port: '',
-            pathname: '/**/**',
+            pathname: '/random/400x400',
           },
           
         ],

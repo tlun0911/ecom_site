@@ -28,7 +28,7 @@ const Cta4 = () => {
             </div>
             <div className="mt-2">
               <p className="text-base leading-6 sm:leading-4 text-gray-600">
-                Check out some of our customer{"\'"}s most loved items
+                Check out some of our customer{"'"}s most loved items
               </p>
             </div>
             <div className="mt-6">
@@ -90,19 +90,19 @@ const Cta4 = () => {
           <div className="absolute bottom-4 sm:bottom-10 inset-x-4 sm:inset-x-10 p-6 bg-white flex flex-col justify-start items-start">
             <div>
               <p className="text-2xl font-semibold leading-6 text-gray-800">
-                Categories
+                Departments
               </p>
             </div>
             <div className="mt-2">
               <p className="text-base leading-6 sm:leading-4 text-gray-600">
-                Browse our collection of products by category
+                Browse our collection of products by department
               </p>
             </div>
             <div className="mt-6">
               <div className="flex justify-between items-center space-x-2">
                 <Link
                   className="text-base font-medium leading-none hover:underline text-gray-800"
-                  href="/"
+                  href="/departments"
                 >
                   Explore
                 </Link>
