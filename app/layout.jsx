@@ -1,6 +1,8 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 
 const montserrat = Montserrat({
@@ -18,7 +20,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className="bg-neutral-200">
       <body className={montserrat.className}>
       <Header />
+      <Suspense fallback={<Loading />}>
         {children}
+      </Suspense>
         </body>
     </html>
   );

@@ -1,9 +1,9 @@
 import React from "react";
 import ProductCard from "../components/ProductCard";
-import { getAllProducts } from "../api/helpers";
+import { getAllProductsNoLimit } from "../api/helpers";
 
 const FavoritesPage = async () => {
-  const products = await getAllProducts();
+  const products = await getAllProductsNoLimit();
   const favorites = products.filter((product) => product.favorite);
   return (
     <div className="overflow-hidden">
