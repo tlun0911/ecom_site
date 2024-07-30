@@ -1,7 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getProductById, getReviews } from "@/app/api/helpers";
+import {
+  getProductById,
+  getReviews,
+  getAllProductIds,
+} from "@/app/api/helpers";
 import { randomImage } from "@/app/api/helpers";
 
 function getRandomDateWithinTwoWeeks() {
@@ -13,6 +17,13 @@ function getRandomDateWithinTwoWeeks() {
     currentDate.getTime() +
     Math.random() * (twoWeeksFromNow.getTime() - currentDate.getTime());
   return new Date(randomTime);
+}
+
+export async function generateStaticParams() {
+  const productIds = await getAllProductIds();
+  return productIds.map((id) => ({
+    id: id.toString(),
+  }));
 }
 
 const ProductPage = async ({ params: { id } }) => {

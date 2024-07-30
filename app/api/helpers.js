@@ -48,6 +48,13 @@ export async function getProductById(id) {
   return product;
 }
 
+export async function getAllProductIds() {
+  // Fetch or generate the list of product IDs
+  const products = getAllProductsNoLimit();
+  const productData = await products.json();
+  return productData.map(product => product.id);
+}
+
 
 
 export function randomImage(width = 400, height = 400) {
