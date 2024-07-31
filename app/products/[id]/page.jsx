@@ -21,7 +21,8 @@ function getRandomDateWithinTwoWeeks() {
 }
 
 export async function generateStaticParams() {
-  const productIds = await getAllProductIds();
+  //const productIds = await getAllProductIds();
+  const productIds = Array.from({ length: 50 }, (_, index) => index + 1)
 
   return productIds.map((id) => ({
     id: id.toString(),
