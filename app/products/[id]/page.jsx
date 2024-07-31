@@ -5,6 +5,7 @@ import {
   getProductById,
   getReviews,
   getAllProductsNoLimit,
+  getAllProductIds,
 } from "@/app/api/helpers";
 import { randomImage } from "@/app/api/helpers";
 
@@ -20,11 +21,11 @@ function getRandomDateWithinTwoWeeks() {
 }
 
 export async function generateStaticParams() {
-  const products = await getAllProductsNoLimit();
-  const paths = products.map((product) => ({
-    params: { id: product.id.toString() },
+  const productIds = await getAllProductIds();
+
+  return productIds.map((id) => ({
+    id: id.toString(),
   }));
-  return paths;
 }
 
 const ProductPage = async ({ params: { id } }) => {
