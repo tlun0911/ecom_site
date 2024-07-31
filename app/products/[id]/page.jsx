@@ -19,12 +19,12 @@ function getRandomDateWithinTwoWeeks() {
   return new Date(randomTime);
 }
 
-export async function generateStaticParams() {
-  const productIds = await getAllProductIds();
-  const slicedIds = productIds.slice(50, 65);
-  return slicedIds.map((id) => ({
-    id: id.toString(),
-  }));
+export function generateStaticParams() {
+  // const productIds = await getAllProductIds();
+  const productIds = Array.from({ length: 60 }, (_, index) => index + 1);
+   return productIds.map((id) => ({
+     id: id.toString(),
+   }));
 }
 
 const ProductPage = async ({ params: { id } }) => {
