@@ -19,6 +19,8 @@ const ProductCard = ({ product }) => {
           width={400}
           height={400}
           className="object-cover absolute h-full w-full"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAEElEQVR42mP8/w8AAwABgAHBmRkAAAAAElFTkSuQmCC"
         />
       </div>
       <div className="p-4 flex flex-col flex-grow">

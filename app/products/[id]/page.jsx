@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   getProductById,
   getReviews,
-  getAllProductIds,
+  getAllProductsNoLimit,
 } from "@/app/api/helpers";
 import { randomImage } from "@/app/api/helpers";
 
@@ -19,16 +19,25 @@ function getRandomDateWithinTwoWeeks() {
   return new Date(randomTime);
 }
 
-export function generateStaticParams() {
-  // const productIds = await getAllProductIds();
-  const productIds = [51, 52, 53, 54, 55, 56, 57, 58, 59, 60];
-   return productIds.map((id) => ({
-     id: id.toString(),
-   }));
+export async function generateStaticParams() {
+  const products = await getAllProductsNoLimit();
+  const paths = products.map((product) => ({
+    params: { id: product.id.toString() },
+  }));
+  return paths;
 }
 
 const ProductPage = async ({ params: { id } }) => {
-  const product = await getProductById(id);
+  const products = await getAllProductsNoLimit();
+  const product = products.find(p => p.id.toString() === id);
+
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+  
+  
   const img_url = randomImage(600, 600);
   const randomDate = getRandomDateWithinTwoWeeks();
   const reviews = await getReviews(id);
