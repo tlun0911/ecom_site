@@ -20,19 +20,24 @@ function getRandomDateWithinTwoWeeks() {
   return new Date(randomTime);
 }
 
+export async function generateStaticParams() {
+  const products = await getAllProductIds();
+  console.log();
+  return products.map((product) => ({
+    id: product.id,
+  }));
+}
 
+export async function getData(id) {
+  console.log("Inside getData function", id);
+  const res = await getProductById(id);
+  const product = await res.json();
+  return product;
+}
 
-const ProductPage = async ({ params: { id } }) => {
-  const products = await getAllProductsNoLimit();
-  const product = products.find(p => p.id.toString() === id);
+const ProductPage = async ({ params }) => {
+  const product = await getData(params.id);
 
-  if (!product) {
-    return {
-      notFound: true,
-    };
-  }
-  
-  
   const img_url = randomImage(600, 600);
   const randomDate = getRandomDateWithinTwoWeeks();
   const reviews = await getReviews(id);
