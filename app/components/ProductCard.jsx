@@ -13,9 +13,11 @@ const ProductCard = ({ product }) => {
   return (
     <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
       <div className="relative pb-48 overflow-hidden">
-        <img
+        <Image
           src={imgUrl}
           alt="Product"
+          width={400}
+          height={400}
           className="object-cover absolute h-full w-full"
         />
       </div>

@@ -132,7 +132,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      href="/products?page=1"
+                      href="/products"
                       className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:text-sky-400"
                     >
                       All Products
@@ -428,7 +428,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      href="/products?page=1"
+                      href="/products"
                       className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
                     >
                       All Products
