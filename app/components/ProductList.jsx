@@ -37,7 +37,7 @@ const ProductList = ({ products, departments }) => {
     if (lastProductElementRef.current) {
       observer.current.observe(lastProductElementRef.current);
     }
-  }, [visibleProducts]);
+  }, [loadMoreProducts]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2">
