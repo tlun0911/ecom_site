@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'landing': "url('/ecom_bg.jpg')",
+        'landing': "url('assets/ecom_bg.jpg')",
       }
     },
   },
