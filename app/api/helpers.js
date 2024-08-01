@@ -6,8 +6,6 @@ export async function getAllProducts(page = 1, limit = 10) {
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
       "content-type": "application/json",
     },
   });
@@ -21,8 +19,6 @@ export async function getAllProductsNoLimit() {
     {
       method: "GET",
       headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
         "content-type": "application/json",
       },
     }
@@ -37,8 +33,6 @@ export async function getProductById(id) {
     {
       method: "GET",
       headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
         "content-type": "application/json",
       },
     }
@@ -73,8 +67,6 @@ export async function getReviews(id) {
     {
       method: "GET",
       headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
         "content-type": "application/json",
       },
     }

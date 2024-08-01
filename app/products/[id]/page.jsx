@@ -21,17 +21,31 @@ function getRandomDateWithinTwoWeeks() {
 }
 
 export async function generateStaticParams() {
-  const products = await getAllProductIds();
-  console.log();
-  return products.map((product) => ({
-    id: product.id,
-  }));
+  const response = await fetch(
+    "https://66a435c844aa637045839087.mockapi.io/api/products",
+    {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data.map((product) => product.id);
 }
 
 export async function getData(id) {
-  console.log("Inside getData function", id);
-  const res = await getProductById(id);
-  const product = await res.json();
+  const response = await fetch(
+    `https://66a435c844aa637045839087.mockapi.io/api/products/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+
+  const product = await response.json();
   return product;
 }
 
@@ -40,7 +54,7 @@ const ProductPage = async ({ params }) => {
 
   const img_url = randomImage(600, 600);
   const randomDate = getRandomDateWithinTwoWeeks();
-  const reviews = await getReviews(id);
+  const reviews = await getReviews(params.id);
 
   let fav_icon;
   if (product.favorite) {
