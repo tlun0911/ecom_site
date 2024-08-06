@@ -1,43 +1,13 @@
 "use client";
-import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 
 const ProductList = ({ products, departments }) => {
-  const [visibleProducts, setVisibleProducts] = useState([]);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [page, setPage] = useState(1);
-  const limit = 9; // Number of products to show per page
-  const observer = useRef();
-  const lastProductElementRef = useRef();
-
-  useEffect(() => {
-    // Initially load the first set of products
-    setVisibleProducts(products.slice(0, limit));
-  }, [products]);
-
-  const loadMoreProducts = () => {
-    const nextPage = page + 1;
-    const newVisibleProducts = products.slice(0, nextPage * limit);
-    setVisibleProducts(newVisibleProducts);
-    setPage(nextPage);
-  };
 
   const toggleFilterVisibility = () => {
     setIsFilterVisible(!isFilterVisible);
   };
-
-  useEffect(() => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        loadMoreProducts();
-      }
-    });
-    if (lastProductElementRef.current) {
-      observer.current.observe(lastProductElementRef.current);
-    }
-  }, [loadMoreProducts]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2">
@@ -59,13 +29,15 @@ const ProductList = ({ products, departments }) => {
                 <h3 className="text-base font-semibold mb-2">Departments</h3>
                 <ul className="h-72 overflow-y-scroll border-2 border-gray-900 border-opacity-50 p-2">
                   {departments?.map((department) => (
-                    <li key={department} className="mb-2">
+                    <li key={department.id} className="mb-2">
                       <label className="inline-flex items-center">
                         <input
                           type="checkbox"
                           className="form-checkbox h-5 w-5 text-gray-600"
                         />
-                        <span className="ml-2 text-gray-700">{department}</span>
+                        <span className="ml-2 text-gray-700">
+                          {department.name}
+                        </span>
                       </label>
                     </li>
                   ))}
@@ -83,16 +55,17 @@ const ProductList = ({ products, departments }) => {
       </div>
       <div className="lg:col-span-9">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {visibleProducts.map((product, index) => {
-            if (visibleProducts.length === index + 1) {
-              return (
-                <div ref={lastProductElementRef} key={product.id}>
-                  <ProductCard product={product} />
-                </div>
-              );
-            } else {
-              return <ProductCard key={product.id} product={product} />;
-            }
+          {products.map((product) => {
+            const departmentName = departments.find(
+              (department) => department.id === product.categoryId
+            )?.name;
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                departmentName={departmentName}
+              />
+            );
           })}
         </div>
       </div>

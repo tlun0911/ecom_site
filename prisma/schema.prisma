@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -21,41 +15,41 @@ model Customer {
   imageURL     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now())
-  orders       Order[]
   shoppingCart Cart?
+  orders       Order[]
   Review       Review[]
 }
 
 model Cart {
   id         String     @id @default(uuid())
   customerId String     @unique
-  customer   Customer   @relation(fields: [customerId], references: [id])
-  items      CartItem[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now())
+  customer   Customer   @relation(fields: [customerId], references: [id])
+  items      CartItem[]
 }
 
 model Order {
   id         String      @id @default(uuid())
   customerId String
-  customer   Customer    @relation(fields: [customerId], references: [id])
   total      Float
   status     String
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now())
+  customer   Customer    @relation(fields: [customerId], references: [id])
   orderItems OrderItem[]
 }
 
 model OrderItem {
   id        String   @id @default(uuid())
   orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Product {
@@ -67,9 +61,9 @@ model Product {
   sku         String      @unique
   stock       Int
   company     String
-  orderItems  OrderItem[]
-  CartItem    CartItem[]
   categoryId  Int
+  CartItem    CartItem[]
+  orderItems  OrderItem[]
   category    Category    @relation(fields: [categoryId], references: [id])
   reviews     Review[]
 }
@@ -77,12 +71,12 @@ model Product {
 model CartItem {
   id             String   @id @default(uuid())
   shoppingCartId String
-  shoppingCart   Cart     @relation(fields: [shoppingCartId], references: [id])
   productId      String
-  product        Product  @relation(fields: [productId], references: [id])
   quantity       Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
+  product        Product  @relation(fields: [productId], references: [id])
+  shoppingCart   Cart     @relation(fields: [shoppingCartId], references: [id])
 }
 
 model Category {
@@ -98,12 +92,12 @@ model Review {
   id            Int       @id @default(autoincrement())
   rating        Int       @default(0)
   comment       String
-  userName      String
-  userAvatarURL String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now())
-  productId     String
-  product       Product   @relation(fields: [productId], references: [id])
-  Customer      Customer? @relation(fields: [customerId], references: [id])
   customerId    String?
+  productId     String
+  userAvatarURL String?
+  userName      String
+  Customer      Customer? @relation(fields: [customerId], references: [id])
+  product       Product   @relation(fields: [productId], references: [id])
 }

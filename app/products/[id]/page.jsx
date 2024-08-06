@@ -1,13 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  getProductById,
-  getReviews,
-  getAllProductsNoLimit,
-  getAllProductIds,
-} from "@/app/api/helpers";
-import { randomImage } from "@/app/api/helpers";
+import { db } from "@/app/lib/db";
+
+const API_URL = process.env.API_URL;
 
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();
@@ -21,40 +17,38 @@ function getRandomDateWithinTwoWeeks() {
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(
-    "https://66a435c844aa637045839087.mockapi.io/api/products",
-    {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${API_URL}/getAllProducts`);
   const data = await response.json();
-  return data.map((product) => product.id);
+  const { products } = data;
+  return products.map((product) => product.id);
 }
 
 export async function getData(id) {
-  const response = await fetch(
-    `https://66a435c844aa637045839087.mockapi.io/api/products/${id}`,
-    {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    }
-  );
+  const product = await db.product.findUnique({
+    where: {
+      id: id,
+    },
+  });
 
-  const product = await response.json();
-  return product;
+  const reviews = await db.review.findMany({
+    where: {
+      productId: id,
+    },
+  });
+
+  const department = await db.category.findUnique({
+    where: {
+      id: product.categoryId,
+    },
+  });
+
+  return { product, reviews, department };
 }
 
 const ProductPage = async ({ params }) => {
-  const product = await getData(params.id);
-
-  const img_url = randomImage(600, 600);
+  const { product, reviews, department } = await getData(params.id);
   const randomDate = getRandomDateWithinTwoWeeks();
-  const reviews = await getReviews(params.id);
+  console.log("Reviews", reviews);
 
   let fav_icon;
   if (product.favorite) {
@@ -71,6 +65,18 @@ const ProductPage = async ({ params }) => {
     fav_icon = <div></div>;
   }
 
+  let in_stock;
+
+  if (product.stock > 0) {
+    in_stock = (
+      <span className="text-gray-900 text-sm">
+        In stock, {product.stock} units available
+      </span>
+    );
+  } else {
+    in_stock = <span className="text-gray-900 text-sm">Out of stock</span>;
+  }
+
   return (
     <div className="container mx-auto m-4 py-4">
       <div className="flex flex-col items-center justify-center space-y-8">
@@ -80,7 +86,7 @@ const ProductPage = async ({ params }) => {
         <div className="grid lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
             <Image
-              src={img_url}
+              src={product.imageURL}
               alt="Product"
               width={600}
               height={600}
@@ -91,7 +97,7 @@ const ProductPage = async ({ params }) => {
           <div className="flex flex-col p-4 space-y-4">
             <p className="text-xl font-medium">{product.description}</p>
             <p className="text-xl font-medium">Price: ${product.price}</p>
-            <p>Department: {product.department}</p>
+            <p>Department: {department.name}</p>
             <div className="flex">
               <Link href="/products">
                 <button
@@ -104,31 +110,38 @@ const ProductPage = async ({ params }) => {
               </Link>
               {fav_icon}
             </div>
-            <span className="text-gray-900 text-sm">
-              Order now and recieve by {randomDate.toDateString()}
-            </span>
+            <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md">
+              {in_stock}
+              <span className="text-gray-900 text-sm">
+                Order now and recieve by {randomDate.toDateString()}
+              </span>
+            </div>
             <div className="flex flex-col space-y-4">
               <h2 className="text-2xl font-bold">Customer Reviews</h2>
               {reviews.map((review) => (
                 <div
                   key={review.id}
-                  className="flex flex-col border-2 p-2 border-gray-900 space-y-2"
+                  className="flex flex-col border-2 p-2 border-gray-900 space-y-2 rounded-md"
                 >
                   <p className="text-lg font-medium">
                     {'"'}
-                    {review.review}
+                    {review.comment}
                     {'"'}
                   </p>
                   <div className="flex flex-col lg:flex-row items-center w-full">
                     <Image
-                      src={review.avatar}
+                      src={review.userAvatarURL}
                       alt="avatar"
                       width={50}
                       height={50}
+                      className="rounded-full"
                     />
-                    <p className="ml-2 text-lg">by {review.name}</p>
+                    <div className="flex flex-col">
+                    <p className="ml-2 text-lg">by {review.userName}</p>
+                    <p className="ml-2 text-sm">{new Date(review.createdAt).toLocaleDateString()}</p>
+                    </div>
                     <p className="lg:text-lg ml-auto mr-2">
-                      Rating: {review.rating}/10
+                      Rating: {review.rating}/5
                     </p>
                   </div>
                 </div>

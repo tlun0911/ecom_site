@@ -1,21 +1,24 @@
 import ProductList from "../components/ProductList";
-import { getAllProductsNoLimit, getCategories } from "../api/helpers";
 
-const getAllProducts = async () => {
-  const res = await fetch("http://localhost:3000/api/getAllProducts");
+const getData = async () => {
+  const API_URL = process.env.API_URL;
+  let productsData = await fetch(`${API_URL}/getAllProducts`);
+  let departmentsData = await fetch(`${API_URL}/getCategories`);
 
-  if (!res.ok) {
+  if (!productsData.ok || !departmentsData.ok) {
     throw new Error("An error occurred while fetching the data");
   }
 
-  return res.json();
+  const productsList = await productsData.json();
+  const departments = await departmentsData.json();
+  const { products } = productsList;
+
+  return { products, departments };
 };
 
 const ProductsPage = async () => {
   try {
-    const products = await getAllProducts();
-    console.log(products);
-    const departments = await getCategories();
+    const { products, departments } = await getData();
 
     return <ProductList products={products} departments={departments} />;
   } catch (error) {
