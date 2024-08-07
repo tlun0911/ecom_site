@@ -224,16 +224,13 @@ const MobileMenu = () => {
         <div className="h-full flex items-end">
           <ul className="flex flex-col space-y-8 bg-gray-50 w-full py-10 p-4 dark:bg-gray-800">
             <SignedOut>
-              <SignInButton
-                appearance={{
-                  colorPrimary: "rgb(14 165 233)",
-                  colorText: "rgb(14 165 233)",
-                  textSize: "small",
-                  // colorText: 
+              <SignInButton 
+                appearance= {{
+                  variables: {
+                    colorPrimary: "red",
+                    colorText: "white",
+                  },
                 }}
-            //     className=" text-sky-500 
-            // border-2 border-sky-500 rounded-xl text-sm px-2
-            // hover:bg-sky-500 hover:text-gray-900"
               />
             </SignedOut>
             <SignedIn>

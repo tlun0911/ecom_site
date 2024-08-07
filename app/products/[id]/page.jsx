@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "@/app/components/AddToCartButton";
 import { db } from "@/app/lib/db";
+import RatingStars from "@/app/components/RatingStars";
+import { auth } from '@clerk/nextjs/server';
 
 const API_URL = process.env.API_URL;
 
@@ -47,6 +50,7 @@ export async function getData(id) {
 const ProductPage = async ({ params }) => {
   const { product, reviews, department } = await getData(params.id);
   const randomDate = getRandomDateWithinTwoWeeks();
+  const { userId } = auth();
 
   let fav_icon;
   if (product.favorite) {
@@ -97,15 +101,7 @@ const ProductPage = async ({ params }) => {
             <p className="text-xl font-medium">Price: ${product.price}</p>
             <p>Department: {department.name}</p>
             <div className="flex">
-              <Link href="/products">
-                <button
-                  className="hover:bg-gray-900 bg-nuetral-200 text-gray-900
-               hover:text-neutral-200 border-2 border-gray-900
-               font-bold py-2 px-4 rounded"
-                >
-                  Order Now
-                </button>
-              </Link>
+              <AddToCartButton productId={product.id} />
               {fav_icon}
             </div>
             <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md">
@@ -116,6 +112,10 @@ const ProductPage = async ({ params }) => {
             </div>
             <div className="flex flex-col space-y-4">
               <h2 className="text-2xl font-bold">Customer Reviews</h2>
+              <div className="flex items-center">
+                <RatingStars rating={product.rating} />
+                <p className="text-lg ml-4">Rating: {product.rating}/5</p>
+              </div>
               {reviews.map((review) => (
                 <div
                   key={review.id}

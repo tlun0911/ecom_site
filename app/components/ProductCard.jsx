@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import RatingStars from "./RatingStars";
 
 const ProductCard = ({ product, departmentName }) => {
   return (
@@ -18,9 +19,9 @@ const ProductCard = ({ product, departmentName }) => {
       <div className="p-4 flex flex-col flex-grow">
         <div className="h-full flex flex-col text-gray-900 flex-grow">
           <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-          <p className="text-gray-900 text-sm mb-4">
-            from <span className="font-medium">{product.company}</span>
-          </p>
+          <div className="flex items-center mb-2">
+            <RatingStars rating={product.rating} />
+          </div>
           <p className="text-gray-900 text-sm mb-4">
             Department: {departmentName}
           </p>
