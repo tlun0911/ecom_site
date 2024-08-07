@@ -23,7 +23,6 @@ const ProductCard = ({ product, departmentName }) => {
           </p>
           <p className="text-gray-900 text-sm mb-4">
             Department: {departmentName}
-            {/* Department: {department?.name} */}
           </p>
           <p className="text-gray-900 text-sm mb-4 line-clamp-2">
             {product.description}

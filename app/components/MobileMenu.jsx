@@ -10,7 +10,7 @@ const MobileMenu = () => {
   return (
     <>
       <button
-      id="open-menu"
+        id="open-menu"
         aria-label="open menu"
         onClick={() => setShowMenu(true)}
         className="text-black dark:text-white dark:hover:text-gray-300 lg:hidden focus:outline-none focus:ring-2 rounded focus:ring-gray-600"
@@ -225,9 +225,15 @@ const MobileMenu = () => {
           <ul className="flex flex-col space-y-8 bg-gray-50 w-full py-10 p-4 dark:bg-gray-800">
             <SignedOut>
               <SignInButton
-                className=" text-sky-500 
-            border-2 border-sky-500 rounded-lg px-2
-            hover:bg-sky-500 hover:text-gray-900"
+                appearance={{
+                  colorPrimary: "rgb(14 165 233)",
+                  colorText: "rgb(14 165 233)",
+                  textSize: "small",
+                  // colorText: 
+                }}
+            //     className=" text-sky-500 
+            // border-2 border-sky-500 rounded-xl text-sm px-2
+            // hover:bg-sky-500 hover:text-gray-900"
               />
             </SignedOut>
             <SignedIn>

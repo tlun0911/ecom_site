@@ -18,8 +18,7 @@ function getRandomDateWithinTwoWeeks() {
 
 export async function generateStaticParams() {
   const response = await fetch(`${API_URL}/getAllProducts`);
-  const data = await response.json();
-  const { products } = data;
+  const products = await response.json();
   return products.map((product) => product.id);
 }
 
@@ -48,7 +47,6 @@ export async function getData(id) {
 const ProductPage = async ({ params }) => {
   const { product, reviews, department } = await getData(params.id);
   const randomDate = getRandomDateWithinTwoWeeks();
-  console.log("Reviews", reviews);
 
   let fav_icon;
   if (product.favorite) {
@@ -137,8 +135,10 @@ const ProductPage = async ({ params }) => {
                       className="rounded-full"
                     />
                     <div className="flex flex-col">
-                    <p className="ml-2 text-lg">by {review.userName}</p>
-                    <p className="ml-2 text-sm">{new Date(review.createdAt).toLocaleDateString()}</p>
+                      <p className="ml-2 text-lg">by {review.userName}</p>
+                      <p className="ml-2 text-sm">
+                        {new Date(review.createdAt).toLocaleDateString()}
+                      </p>
                     </div>
                     <p className="lg:text-lg ml-auto mr-2">
                       Rating: {review.rating}/5

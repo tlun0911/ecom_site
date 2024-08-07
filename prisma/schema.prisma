@@ -53,19 +53,21 @@ model OrderItem {
 }
 
 model Product {
-  id          String      @id @default(uuid())
-  name        String
-  price       Float
-  description String
-  imageURL    String
-  sku         String      @unique
-  stock       Int
-  company     String
-  categoryId  Int
-  CartItem    CartItem[]
-  orderItems  OrderItem[]
-  category    Category    @relation(fields: [categoryId], references: [id])
-  reviews     Review[]
+  id              String      @id @default(uuid())
+  name            String
+  price           Float
+  description     String
+  longDescription String?
+  favorite        Boolean     @default(false)
+  imageURL        String
+  sku             String      @unique
+  stock           Int
+  company         String
+  categoryId      Int
+  CartItem        CartItem[]
+  orderItems      OrderItem[]
+  category        Category    @relation(fields: [categoryId], references: [id])
+  reviews         Review[]
 }
 
 model CartItem {
