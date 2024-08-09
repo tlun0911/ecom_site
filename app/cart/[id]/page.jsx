@@ -65,7 +65,7 @@ export const CartPage = async ({ params }) => {
           {products.map((product) => (
             <li
               className="flex flex-col lg:flex-row lg:space-x-10 justify-between items-center 
-                border-2 border-gray-900 rounded-md lg:min-w-max 
+                border-2 border-gray-900 rounded-md lg:min-w-max space-y-4 lg:space-y-0
                 p-4 flex-grow"
               key={product.name}
             >
@@ -95,7 +95,7 @@ export const CartPage = async ({ params }) => {
           ))}
         </ul>
 
-        <div className="flex w-1/2 self-start mx-auto space-x-6">
+        <div className="flex flex-col lg:flex-row lg:w-1/2 self-start mx-auto lg:space-x-6">
           <p className="text-xl font-semibold">{cart?.items.length} items</p>
           <p className="text-xl font-semibold">Total: ${total}</p>
         </div>

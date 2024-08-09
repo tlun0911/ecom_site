@@ -2,6 +2,7 @@
 
 import React from "react";
 import ToastNotification from "./ToastNotification";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const AddToCartButton = ({ productId }) => {
   const addToCart = async () => {
@@ -14,13 +15,7 @@ const AddToCartButton = ({ productId }) => {
         body: JSON.stringify({ productId }),
       });
 
-      if (response.status === 401) {
-        // User not logged in, add item to localStorage
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.push({ productId, quantity: 1 });
-        localStorage.setItem("cart", JSON.stringify(cart));
-        alert("Item added to cart. Please log in to proceed to checkout.");
-      } else if (!response.ok) {
+      if (!response.ok) {
         throw new Error("Failed to add item to cart");
       } else {
         const data = await response.json();
@@ -36,14 +31,21 @@ const AddToCartButton = ({ productId }) => {
   return (
     <>
       <ToastNotification />
-      <button
-        className="hover:bg-gray-900 bg-neutral-200 text-gray-900
+      <SignedIn>
+        <button
+          className="hover:bg-gray-900 bg-neutral-200 text-gray-900
           hover:text-neutral-200 border-2 border-gray-900
           font-bold py-2 px-4 rounded"
-        onClick={addToCart}
-      >
-        Order Now
-      </button>
+          onClick={addToCart}
+        >
+          Order Now
+        </button>
+      </SignedIn>
+      <SignedOut>
+        <p className="bg-gray-900 text-neutral-200 text-lg p-2 rounded-md">
+          Sign in to place your order!
+        </p>
+      </SignedOut>
     </>
   );
 };

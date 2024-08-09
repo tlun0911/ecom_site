@@ -101,7 +101,7 @@ const ProductPage = async ({ params }) => {
             <p className="text-xl font-medium">Price: ${product.price}</p>
             <p>Department: {department.name}</p>
             <div className="flex">
-              <AddToCartButton productId={product.id} />
+              <AddToCartButton productId={product.id} userId={userId} />
               {fav_icon}
             </div>
             <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md">

@@ -50,9 +50,9 @@ const Header = async () => {
                   </Link>
                 </li>
               </ul>
-              <div>
+              <div className="flex space-x-2">
+                <CartIcon />
                 <div className="hidden lg:flex ">
-                  <CartIcon />
                   <div className="w-full ml-2">
                     <Suspense>
                       <SignedOut>
@@ -64,10 +64,10 @@ const Header = async () => {
                     </Suspense>
                   </div>
                 </div>
-              </div>
 
-              <div className="lg:hidden">
-                <MobileMenu />
+                <div className="lg:hidden">
+                  <MobileMenu />
+                </div>
               </div>
             </div>
           </div>
