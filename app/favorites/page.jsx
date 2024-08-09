@@ -2,7 +2,7 @@ import React from "react";
 import ProductCard from "../components/ProductCard";
 
 const FavoritesPage = async () => {
-  const API_URL = process.env.API_URL;
+  const API_URL = process.env.API_URL || "http://localhost:3000/api";
   let productsData = await fetch(`${API_URL}/getAllProducts`);
   let departmentsData = await fetch(`${API_URL}/getCategories`);
 
@@ -22,7 +22,7 @@ const FavoritesPage = async () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
         {favorites.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={`favorites${product.id}`} product={product} departments={departments} />
         ))}
       </div>
     </div>

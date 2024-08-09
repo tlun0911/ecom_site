@@ -11,13 +11,11 @@ export async function POST(request) {
     if (userId) {
       try {
         // Find or create a cart for the user
-        console.log("Inside try block");
         let cart = await db.cart.findFirst({
           where: { customerId: userId },
         });
   
         if (!cart) {
-          console.log("Creating cart");
           cart = await db.cart.create({
             data: { customerId: userId },
           });
@@ -41,12 +39,3 @@ export async function POST(request) {
     }
   }
 
-// export async function GET(request) {
-//   const { user } = request.params;
-//   return {
-//     status: 200,
-//     body: {
-//       cart: user.cart,
-//     },
-//   };
-// }

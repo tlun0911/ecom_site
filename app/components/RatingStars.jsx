@@ -9,6 +9,7 @@ const RatingStars = ({ rating }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
           className="fill-yellow-400 h-4 w-4"
+          key={i}
         >
           <path
             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 
@@ -25,6 +26,7 @@ const RatingStars = ({ rating }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
           className="fill-yellow-400 h-4 w-4"
+          key={i}
         >
           <path
             d="M288 376.4l.1-.1 26.4 14.1 85.2 45.5-16.5-97.6-4.8-28.7 
@@ -43,6 +45,7 @@ const RatingStars = ({ rating }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
           className="fill-yellow-400 h-4 w-4"
+          key={i}
         >
           <path
             d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 
@@ -59,7 +62,7 @@ const RatingStars = ({ rating }) => {
       );
     }
   }
-  return <>{stars}</>;
+  return <div className="flex">{stars}</div>;
 };
 
 export default RatingStars;

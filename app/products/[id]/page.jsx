@@ -6,7 +6,7 @@ import { db } from "@/app/lib/db";
 import RatingStars from "@/app/components/RatingStars";
 import { auth } from '@clerk/nextjs/server';
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || "http://localhost:3000/api";
 
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();

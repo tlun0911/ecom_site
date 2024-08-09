@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import ToastNotification from "./ToastNotification";
 
-const AddToCartButton = ({ productId}) => {
-  const router = useRouter();
+const AddToCartButton = ({ productId }) => {
   const addToCart = async () => {
     try {
       const response = await fetch("/api/cart/add", {
@@ -26,6 +25,8 @@ const AddToCartButton = ({ productId}) => {
       } else {
         const data = await response.json();
         console.log("Product added to cart:", data);
+        localStorage.setItem("toast", JSON.stringify("Item added to cart"));
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -33,14 +34,17 @@ const AddToCartButton = ({ productId}) => {
   };
 
   return (
-    <button
-      className="hover:bg-gray-900 bg-neutral-200 text-gray-900
+    <>
+      <ToastNotification />
+      <button
+        className="hover:bg-gray-900 bg-neutral-200 text-gray-900
           hover:text-neutral-200 border-2 border-gray-900
           font-bold py-2 px-4 rounded"
-      onClick={addToCart}
-    >
-      Order Now
-    </button>
+        onClick={addToCart}
+      >
+        Order Now
+      </button>
+    </>
   );
 };
 

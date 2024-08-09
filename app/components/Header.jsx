@@ -1,7 +1,9 @@
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
-import SearchBar from "./SearchBar";
-import { checkCustomer } from "../lib/checkCustomer";
+import CartIcon from "./CartIcon";
+import { checkCustomer } from "@/app/lib/checkCustomer";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 const Header = async () => {
   const customer = await checkCustomer();
@@ -47,18 +49,20 @@ const Header = async () => {
                     Favorites
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:text-sky-400"
-                  >
-                    Support
-                  </Link>
-                </li>
               </ul>
               <div>
                 <div className="hidden lg:flex ">
-                  <SearchBar />
+                  <CartIcon />
+                  <div className="w-full ml-2">
+                    <Suspense>
+                      <SignedOut>
+                        <SignInButton className="border-2 border-sky-500 text-sky-500 px-2 min-w-max" />
+                      </SignedOut>
+                      <SignedIn>
+                        <UserButton />
+                      </SignedIn>
+                    </Suspense>
+                  </div>
                 </div>
               </div>
 
