@@ -1,36 +1,21 @@
 import ProductList from "../components/ProductList";
-
-const getData = async () => {
-  const API_URL = process.env.API_URL || "http://localhost:3000/api";
-  let productsData = await fetch(`${API_URL}/getAllProducts`);
-  let departmentsData = await fetch(`${API_URL}/getCategories`);
-
-  if (!productsData.ok || !departmentsData.ok) {
-    throw new Error("An error occurred while fetching the data");
-  }
-
-  const productsList = await productsData.json();
-  const departments = await departmentsData.json();
-
-  return { productsList, departments };
-};
+import FilterList from "../components/FilterList";
+import { db } from "@/app/lib/db";
+import ProductCardSkeleton from "../components/ProductCardSkeleton";
+import { Suspense } from "react";
 
 const ProductsPage = async () => {
-  try {
-    const { productsList, departments } = await getData();
+  const productsList = await db.product.findMany();
+  const departments = await db.category.findMany();
 
-    return (
-      <>
-        <ProductList products={productsList} departments={departments} />
-      </>
-    );
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return;
-    <>
-      <ProductList products={[]} departments={[]} />;
-    </>;
-  }
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2">
+      <FilterList productsList={productsList} departments={departments} />
+      <Suspense fallback={<ProductCardSkeleton />}>
+        <ProductList />
+      </Suspense>
+    </div>
+  );
 };
 
 export default ProductsPage;

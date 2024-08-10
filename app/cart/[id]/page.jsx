@@ -21,12 +21,8 @@ const fetchCartTotal = async (cartId, userId) => {
     } catch (error) {
       console.error("Error fetching cart total:", error);
     }
-  } else {
-    // If user is not logged in, try to get cart from localstorage
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log("Local Cart", cart);
-    return cart;
-  }
+  } 
+  return null;
 };
 
 export const CartPage = async ({ params }) => {

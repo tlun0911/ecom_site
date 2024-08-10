@@ -1,17 +1,10 @@
 import React from "react";
 import ProductCard from "../components/ProductCard";
+import { db } from "@/app/lib/db";
 
 const FavoritesPage = async () => {
-  const API_URL = process.env.API_URL || "http://localhost:3000/api";
-  let productsData = await fetch(`${API_URL}/getAllProducts`);
-  let departmentsData = await fetch(`${API_URL}/getCategories`);
-
-  if (!productsData.ok || !departmentsData.ok) {
-    throw new Error("An error occurred while fetching the data");
-  }
-  const productsList = await productsData.json();
-  const departments = await departmentsData.json();
-
+  const productsList = await db.product.findMany();
+  const departments = await db.category.findMany();
   const favorites = productsList.filter((product) => product.favorite);
 
   return (
@@ -22,7 +15,15 @@ const FavoritesPage = async () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
         {favorites.map((product) => (
-          <ProductCard key={`favorites${product.id}`} product={product} departments={departments} />
+          <ProductCard
+            key={`favorites${product.id}`}
+            product={product}
+            departmentName={
+              departments.find(
+                (department) => department.id === product.categoryId
+              ).name
+            }
+          />
         ))}
       </div>
     </div>

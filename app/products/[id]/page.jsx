@@ -6,7 +6,6 @@ import { db } from "@/app/lib/db";
 import RatingStars from "@/app/components/RatingStars";
 import { auth } from '@clerk/nextjs/server';
 
-const API_URL = process.env.API_URL || "http://localhost:3000/api";
 
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();
@@ -20,35 +19,35 @@ function getRandomDateWithinTwoWeeks() {
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(`${API_URL}/getAllProducts`);
-  const products = await response.json();
+  const products = await db.product.findMany();
   return products.map((product) => product.id);
 }
 
-export async function getData(id) {
-  const product = await db.product.findUnique({
-    where: {
-      id: id,
-    },
-  });
 
-  const reviews = await db.review.findMany({
-    where: {
-      productId: id,
-    },
-  });
-
-  const department = await db.category.findUnique({
-    where: {
-      id: product.categoryId,
-    },
-  });
-
-  return { product, reviews, department };
-}
 
 const ProductPage = async ({ params }) => {
-  const { product, reviews, department } = await getData(params.id);
+
+  const product = await db.product.findUnique({
+    where: {
+      id: params.id,
+    },
+    include: {
+      category: true,
+      reviews: {
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+          userAvatarURL: true,
+          userName: true,
+        },
+      },
+    },
+  });
+
+  const reviews = product.reviews;
+  const department = product.category;
   const randomDate = getRandomDateWithinTwoWeeks();
   const { userId } = auth();
 

@@ -1,10 +1,10 @@
 import React from "react";
 import DepartmentCard from "../components/DepartmentCard";
+import { db } from "@/app/lib/db";
 
 const DepartmentsListPage = async () => {
 
-  const response = await fetch("http://localhost:3000/api/getCategories");
-  const departments = await response.json();
+  const departments = await db.category.findMany();
 
   return (
     <div className="container mx-auto mt-4">
