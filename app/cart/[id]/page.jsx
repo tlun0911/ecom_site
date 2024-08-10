@@ -2,37 +2,30 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
+import { db } from "@/app/lib/db";
 import DeleteCartItemButton from "@/app/components/DeleteCartItemButton";
 import ToastNotification from "@/app/components/ToastNotification";
 
-const fetchCartTotal = async (cartId, userId) => {
-  if (userId) {
-    try {
-      let res = await fetch(`http://localhost:3000/api/cart/${cartId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          userId: userId,
-        },
-      });
-      const cart = await res.json();
-      console.log("Cart", cart);
-      return cart;
-    } catch (error) {
-      console.error("Error fetching cart total:", error);
-    }
-  } 
-  return null;
-};
+
 
 export const CartPage = async ({ params }) => {
   const cartId = params.id;
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId;
   const userName = sessionClaims?.firstName;
-  console.log("cartId", cartId);
 
-  const cart = await fetchCartTotal(cartId, userId);
+  const cart = await db.cart.findUnique({
+    where: { id: cartId, customerId: userId },
+    include: {
+      items: {
+        include: {
+          product: {
+            select: { id: true, name: true, price: true, imageURL: true },
+          },
+        },
+      },
+    },
+  });
 
   let products =
     cart?.items.map((product) => {
