@@ -4,8 +4,7 @@ import Header from "./components/Header";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { ClerkProvider } from "@clerk/nextjs";
-import ToastProvider from "./components/ToastProvider";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 
 const montserrat = Montserrat({
   weight: ["400", "700", "800"],
@@ -22,10 +21,9 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en" className="bg-neutral-200">
         <body className={montserrat.className}>
-          <ToastProvider>
-            <Header />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </ToastProvider>
+          <Toaster />
+          <Header />
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </body>
       </html>
     </ClerkProvider>

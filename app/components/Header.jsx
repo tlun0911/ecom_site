@@ -1,12 +1,12 @@
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
-import CartIcon from "./CartIcon";
 import { checkCustomer } from "@/app/lib/checkCustomer";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Suspense } from "react";
+import ClerkComponent from "./ClerkComponent";
+import CartIcon from "./CartIcon";
 
 const Header = async () => {
-  const customer = await checkCustomer();
+  checkCustomer();
 
   return (
     <div className="dark:bg-gray-900 sticky top-0 z-50">
@@ -50,19 +50,13 @@ const Header = async () => {
                   </Link>
                 </li>
               </ul>
-              <div className="flex space-x-2">
-                <CartIcon />
-                <div className="hidden lg:flex ">
-                  <div className="w-full ml-2">
-                    <Suspense>
-                      <SignedOut>
-                        <SignInButton className="border-2 border-sky-500 text-sky-500 px-2 min-w-max" />
-                      </SignedOut>
-                      <SignedIn>
-                        <UserButton />
-                      </SignedIn>
-                    </Suspense>
-                  </div>
+              <div className="hidden lg:flex ">
+                <div className="w-full ml-2">
+                  <Suspense>
+                    <ClerkComponent>
+                      <CartIcon />
+                    </ClerkComponent>
+                  </Suspense>
                 </div>
 
                 <div className="lg:hidden">

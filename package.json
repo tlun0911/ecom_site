@@ -10,13 +10,15 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.3.0",
+    "@clerk/nextjs": "5.2.5-snapshot.v910e99d",
     "@prisma/client": "^5.17.0",
+    "date-fns": "^3.6.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
     "react-spinners": "^0.14.1",
-    "react-toastify": "^10.0.5",
+    "sharp": "^0.33.4",
+    "sonner": "^1.5.0",
     "webpack": "^4.47.0"
   },
   "devDependencies": {

@@ -1,31 +1,19 @@
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { db } from "@/app/lib/db";
 
-const fetchCartTotal = async () => {
+const CartIcon = async () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId;
 
   let cart;
-
   if (userId) {
-    try {
-      let res = await fetch("http://localhost:3000/api/cart", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          userId: userId,
-        },
-      });
-      cart = await res.json();
-    } catch (error) {
-      console.error("Error fetching cart total:", error);
-    }
+    cart = await db.cart.findFirst({
+      where: { customerId: userId },
+      include: { items: true },
+    });
   }
-  return cart;
-};
 
-const CartIcon = async () => {
-  const cart = await fetchCartTotal();
   const cartTotal = cart?.items.length;
   let cartId = cart?.id;
 

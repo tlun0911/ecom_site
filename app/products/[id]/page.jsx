@@ -4,8 +4,8 @@ import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
 import { db } from "@/app/lib/db";
 import RatingStars from "@/app/components/RatingStars";
-import { auth } from '@clerk/nextjs/server';
-
+import { auth } from "@clerk/nextjs/server";
+import { format } from "date-fns";
 
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();
@@ -22,8 +22,6 @@ export async function generateStaticParams() {
   const products = await db.product.findMany();
   return products.map((product) => product.id);
 }
-
-
 
 const ProductPage = async ({ params }) => {
 
@@ -91,8 +89,8 @@ const ProductPage = async ({ params }) => {
               alt="Product"
               width={600}
               height={600}
-              placeholder="blur"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcu3FjPQAGsgKQ92yjQAAAAABJRU5ErkJggg=="
+              // placeholder="blur"
+              // blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcu3FjPQAGsgKQ92yjQAAAAABJRU5ErkJggg=="
             />
           </div>
           <div className="flex flex-col p-4 space-y-4">
@@ -136,7 +134,7 @@ const ProductPage = async ({ params }) => {
                     <div className="flex flex-col">
                       <p className="ml-2 text-lg">by {review.userName}</p>
                       <p className="ml-2 text-sm">
-                        {new Date(review.createdAt).toLocaleDateString()}
+                        {format(new Date(review.createdAt), "MM/dd/yyyy")}
                       </p>
                     </div>
                     <p className="lg:text-lg ml-auto mr-2">

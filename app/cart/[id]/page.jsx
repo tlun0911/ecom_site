@@ -6,8 +6,6 @@ import { db } from "@/app/lib/db";
 import DeleteCartItemButton from "@/app/components/DeleteCartItemButton";
 import ToastNotification from "@/app/components/ToastNotification";
 
-
-
 export const CartPage = async ({ params }) => {
   const cartId = params.id;
   const { sessionClaims } = auth();
@@ -38,7 +36,6 @@ export const CartPage = async ({ params }) => {
         productId: product.product.id,
       };
     }) || [];
-    console.log("Products", products);
 
   let total = products.reduce((acc, product) => {
     return acc + product.price * product.quantity;

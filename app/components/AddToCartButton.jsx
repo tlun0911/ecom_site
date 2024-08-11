@@ -7,7 +7,7 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 const AddToCartButton = ({ productId }) => {
   const addToCart = async () => {
     try {
-      const response = await fetch("http:/localhost:3000/api/cart/add", {
+      const response = await fetch("http://localhost:3000/api/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
