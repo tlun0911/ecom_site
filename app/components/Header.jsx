@@ -1,7 +1,6 @@
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import { checkCustomer } from "@/app/lib/checkCustomer";
-import { Suspense } from "react";
 import ClerkComponent from "./ClerkComponent";
 import CartIcon from "./CartIcon";
 
@@ -52,11 +51,9 @@ const Header = async () => {
               </ul>
               <div className="hidden lg:flex ">
                 <div className="w-full ml-2">
-                  <Suspense>
                     <ClerkComponent>
                       <CartIcon />
                     </ClerkComponent>
-                  </Suspense>
                 </div>
 
                 <div className="lg:hidden">

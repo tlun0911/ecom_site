@@ -1,12 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import RatingStars from "./RatingStars";
-import { Suspense } from "react";
-import ProductCardSkeleton from "./ProductCardSkeleton";
 
-const ProductCard = ({ product, departmentName }) => {
+const ProductCard = async ({ product, departmentName }) => {
   return (
-    <Suspense key={product.id} fallback={<ProductCardSkeleton />}>
       <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
         <div className="relative pb-48 overflow-hidden">
           <Image
@@ -45,7 +42,6 @@ const ProductCard = ({ product, departmentName }) => {
           </div>
         </div>
       </div>
-    </Suspense>
   );
 };
 

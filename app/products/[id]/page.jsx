@@ -7,6 +7,8 @@ import RatingStars from "@/app/components/RatingStars";
 import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
 
+export const dynamic = 'force-dynamic';
+
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();
   const twoWeeksFromNow = new Date();
@@ -23,8 +25,7 @@ export async function generateStaticParams() {
   return products.map((product) => product.id);
 }
 
-const ProductPage = async ({ params }) => {
-
+export async function getData({ params }) {
   const product = await db.product.findUnique({
     where: {
       id: params.id,
@@ -43,11 +44,18 @@ const ProductPage = async ({ params }) => {
       },
     },
   });
+  return product;
+}
+
+const ProductPage = async ({ params }) => {
+
+  const product = await getData({ params });
 
   const reviews = product.reviews;
   const department = product.category;
   const randomDate = getRandomDateWithinTwoWeeks();
-  const { userId } = auth();
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId;
 
   let fav_icon;
   if (product.favorite) {

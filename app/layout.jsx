@@ -1,8 +1,6 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-import { Suspense } from "react";
-import Loading from "./loading";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
@@ -23,7 +21,7 @@ export default function RootLayout({ children }) {
         <body className={montserrat.className}>
           <Toaster />
           <Header />
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          {children}
         </body>
       </html>
     </ClerkProvider>
