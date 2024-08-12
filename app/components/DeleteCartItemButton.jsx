@@ -13,7 +13,7 @@ const DeleteCartItemButton = ({ itemId, cartId }) => {
     }
 
     try {
-      let res = await fetch(`http://localhost:3000/api/cart/${cartId}`, {
+      let res = await fetch(`https://ecom-site-steel-seven.vercel.app/api/cart/${cartId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
