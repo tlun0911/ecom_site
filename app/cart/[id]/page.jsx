@@ -42,7 +42,7 @@ export const CartPage = async ({ params }) => {
       <div className="container p-4 mx-auto mt-4">
         <div className="flex flex-col items-center justify-center space-y-6">
           <h1 className="text-3xl font-semibold text-gray-900">
-            It looks like your cart is empty, let's change that!
+            It looks like your cart is empty, how about we change that!
           </h1>
           <Link href="/products">
             <button className="bg-gray-900 text-neutral-200 text-lg p-2 rounded-lg mt-4">
