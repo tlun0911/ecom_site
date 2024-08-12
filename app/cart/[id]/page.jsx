@@ -41,6 +41,8 @@ export const CartPage = async ({ params }) => {
     return acc + product.price * product.quantity;
   }, 0);
 
+  total = total.toFixed(2);
+
   return (
     <>
       <ToastNotification />
@@ -80,11 +82,19 @@ export const CartPage = async ({ params }) => {
             </li>
           ))}
         </ul>
-
-        <div className="flex flex-col lg:flex-row lg:w-1/2 self-start mx-auto lg:space-x-6">
-          <p className="text-xl font-semibold">{cart?.items.length} items</p>
-          <p className="text-xl font-semibold">Total: ${total}</p>
-        </div>
+      </div>
+      <div
+        className="flex flex-col w-full flex-grow lg:flex-row lg:w-1/2 self-start 
+        mx-auto lg:space-x-6 mb-8 mt-4 items-center"
+      >
+        <p className="text-xl font-semibold">{cart?.items.length} items</p>
+        <p className="text-xl font-semibold">Total: ${total}</p>
+        <Link href={`/cart/${cartId}/checkout`} className="ml-auto">
+          <button className="bg-gray-900 text-neutral-200 text-lg
+          p-2 rounded-lg flex-grow ml-auto">
+            Proceed to Checkout
+          </button>
+        </Link>
       </div>
     </>
   );

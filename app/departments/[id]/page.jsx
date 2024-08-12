@@ -2,6 +2,9 @@ import React from "react";
 import ProductCard from "@/app/components/ProductCard";
 import { db } from "@/app/lib/db";
 
+export const dynamic = 'force-dynamic';
+
+
 export async function generateStaticParams() {
   const departments = await db.category.findMany();
   return departments.map((department) => department.id);
