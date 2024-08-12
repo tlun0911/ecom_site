@@ -49,14 +49,14 @@ const Header = async () => {
                   </Link>
                 </li>
               </ul>
-              <div className="hidden lg:flex ">
+              <div className="flex  ">
                 <div className="w-full ml-2">
                     <ClerkComponent>
                       <CartIcon />
                     </ClerkComponent>
                 </div>
 
-                <div className="lg:hidden">
+                <div className="lg:hidden ml-4">
                   <MobileMenu />
                 </div>
               </div>

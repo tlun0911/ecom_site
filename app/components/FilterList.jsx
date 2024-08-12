@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const FilterList = ({ products, departments }) => {
+const FilterList = ({ departments }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const toggleFilterVisibility = () => {
@@ -10,7 +10,7 @@ const FilterList = ({ products, departments }) => {
   };
 
   return (
-    <div className="relative lg:col-span-3 bg-gray-100 p-2">
+    <div className="relative lg:col-span-3 bg-gray-100 p-2 min-h-screen">
       <div className="lg:fixed">
         <h2 className="hidden lg:block text-xl font-bold mb-4">
           Filter Options

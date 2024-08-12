@@ -2,6 +2,8 @@ import React from "react";
 import DepartmentCard from "../components/DepartmentCard";
 import { db } from "@/app/lib/db";
 
+export const dynamic = 'force-dynamic';
+
 const DepartmentsListPage = async () => {
 
   const departments = await db.category.findMany();

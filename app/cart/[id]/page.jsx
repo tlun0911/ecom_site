@@ -37,6 +37,23 @@ export const CartPage = async ({ params }) => {
       };
     }) || [];
 
+  if (products.length === 0) {
+    return (
+      <div className="container p-4 mx-auto mt-4">
+        <div className="flex flex-col items-center justify-center space-y-6">
+          <h1 className="text-3xl font-semibold text-gray-900">
+            It looks like your cart is empty, let's change that!
+          </h1>
+          <Link href="/products">
+            <button className="bg-gray-900 text-neutral-200 text-lg p-2 rounded-lg mt-4">
+              Go Shopping
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   let total = products.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
@@ -85,13 +102,15 @@ export const CartPage = async ({ params }) => {
       </div>
       <div
         className="flex flex-col w-full flex-grow lg:flex-row lg:w-1/2 self-start 
-        mx-auto lg:space-x-6 mb-8 mt-4 items-center"
+        mx-auto space-y-3 lg:space-y-0 lg:space-x-6 mb-8 mt-4 items-center"
       >
         <p className="text-xl font-semibold">{cart?.items.length} items</p>
         <p className="text-xl font-semibold">Total: ${total}</p>
-        <Link href={`/cart/${cartId}/checkout`} className="ml-auto">
-          <button className="bg-gray-900 text-neutral-200 text-lg
-          p-2 rounded-lg flex-grow ml-auto">
+        <Link href={`/cart/${cartId}/checkout`} className="lg:ml-auto">
+          <button
+            className="bg-gray-900 text-neutral-200 text-lg
+          p-2 rounded-lg flex-grow lg:ml-auto"
+          >
             Proceed to Checkout
           </button>
         </Link>

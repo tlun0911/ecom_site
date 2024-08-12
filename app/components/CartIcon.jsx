@@ -12,6 +12,7 @@ const CartIcon = async () => {
       where: { customerId: userId },
       include: { items: true },
     });
+
   }
 
   const cartTotal = cart?.items.length;

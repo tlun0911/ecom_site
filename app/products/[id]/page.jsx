@@ -6,8 +6,9 @@ import { db } from "@/app/lib/db";
 import RatingStars from "@/app/components/RatingStars";
 import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
+import getBase64 from "@/app/components/getBase64";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 function getRandomDateWithinTwoWeeks() {
   const currentDate = new Date();
@@ -25,10 +26,10 @@ export async function generateStaticParams() {
   return products.map((product) => product.id);
 }
 
-export async function getData({ params }) {
+export async function getData(id) {
   const product = await db.product.findUnique({
     where: {
-      id: params.id,
+      id: id,
     },
     include: {
       category: true,
@@ -48,8 +49,8 @@ export async function getData({ params }) {
 }
 
 const ProductPage = async ({ params }) => {
-
-  const product = await getData({ params });
+  const product = await getData(params.id);
+  const base64Img = await getBase64(product.imageURL);
 
   const reviews = product.reviews;
   const department = product.category;
@@ -97,8 +98,8 @@ const ProductPage = async ({ params }) => {
               alt="Product"
               width={600}
               height={600}
-              // placeholder="blur"
-              // blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcu3FjPQAGsgKQ92yjQAAAAABJRU5ErkJggg=="
+              placeholder="blur"
+              blurDataURL={base64Img}
             />
           </div>
           <div className="flex flex-col p-4 space-y-4">

@@ -16,7 +16,7 @@ export default function Home() {
             <Image
               src="https://i.ibb.co/q5k5j57/bench-accounting-nvzv-OPQW0gc-unsplash-1-1.png"
               alt="A work table with house plants"
-              className="w-full h-full hidden lg:block"
+              className="w-full h-full block"
               width={800}
               height={800}
               
