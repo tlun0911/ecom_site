@@ -8,7 +8,7 @@ const Header = async () => {
   checkCustomer();
 
   return (
-    <div className="dark:bg-gray-900 sticky top-0 z-50">
+    <div className="dark:bg-gray-900 sticky top-0 z-50 max-w-screen overflow-x-hidden">
       <div>
         <div className="relative">
           {/* For large screens */}

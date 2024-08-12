@@ -9,6 +9,7 @@ const FilterList = ({ departments }) => {
     setIsFilterVisible(!isFilterVisible);
   };
 
+
   return (
     <div className="relative lg:col-span-3 bg-gray-100 p-2 min-h-screen">
       <div className="lg:fixed">
@@ -32,7 +33,6 @@ const FilterList = ({ departments }) => {
                     <label className="inline-flex items-center">
                       <input
                         type="checkbox"
-                        key={`input${department.id}`}
                         className="form-checkbox h-5 w-5 text-gray-600"
                       />
                       <span
