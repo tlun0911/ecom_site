@@ -83,12 +83,12 @@ const MobileMenu = () => {
         <div className="mt-6 p-4">
           <ul className="flex flex-col space-y-6">
             <li>
+              <div>
               <Link
                 href="/"
                 className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
                 Home
-                <div>
                   <svg
                     className="fill-stroke text-black dark:text-white"
                     width={12}
@@ -105,8 +105,8 @@ const MobileMenu = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </div>
               </Link>
+                </div>
             </li>
             <li>
               <Link
