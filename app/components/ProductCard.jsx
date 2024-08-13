@@ -29,7 +29,7 @@ const ProductCard = async ({ product }) => {
           </p>
           <div className="flex justify-self-end items-center justify-between mt-auto">
             <p className="font-bold text-lg">${product.price}</p>
-            <Link href={`/products/${product.id}`}>
+            <Link href={`/product/${product.id}`}>
               <button
                 type="button"
                 className="bg-white border-2 border-gray-900 hover:bg-gray-900 text-gray-900 hover:text-white font-bold py-2 px-4 rounded"

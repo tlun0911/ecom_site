@@ -1,9 +1,12 @@
 import ProductCard from "../components/ProductCard";
 
 const ProductList = async () => {
-  try {
-    const data = await fetch("https://dummyjson.com/products?limit=10");
+    const data = await fetch("https://dummyjson.com/products?limit=12");
     const { products } = await data.json();
+
+    if(!data.ok) {
+      return <div>Something went wrong fetching the data</div>
+    }
 
     return (
       <div className="lg:col-span-9">
@@ -14,10 +17,7 @@ const ProductList = async () => {
         </div>
       </div>
     );
-  } catch (error) {
-    console.error("Error rendering ProductList:", error);
-    return <div>Something went wrong</div>;
-  }
+
 };
 
 export default ProductList;
