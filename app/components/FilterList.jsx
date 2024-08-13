@@ -11,7 +11,7 @@ const FilterList = ({ departments }) => {
 
 
   return (
-    <div className="relative lg:col-span-3 bg-gray-100 p-2 min-h-screen">
+    <div className="relative lg:col-span-3 bg-gray-100 p-2 lg:min-h-screen">
       <div className="lg:fixed">
         <h2 className="hidden lg:block text-xl font-bold mb-4">
           Filter Options
