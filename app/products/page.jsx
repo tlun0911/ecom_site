@@ -5,13 +5,11 @@ import { Suspense } from "react";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 
 const ProductsPage = async () => {
-  const departmentsData = await db.category.findMany();
 
   try {
-    const departments = await db.category.findMany();
     return (
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2">
-        <FilterList departments={departments} />
+        {/* <FilterList departments={departments} /> */}
         <Suspense fallback={<ProductCardSkeleton />}>
           <ProductList />
         </Suspense>

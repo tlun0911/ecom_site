@@ -42,10 +42,10 @@ const Header = async () => {
                 </li>
                 <li>
                   <Link
-                    href="/favorites"
+                    href="/categories"
                     className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:text-sky-400"
                   >
-                    Favorites
+                    Categories
                   </Link>
                 </li>
               </ul>

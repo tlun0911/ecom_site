@@ -5,7 +5,6 @@ import { db } from "./db";
 
 export const checkCustomer = async () => {
   const customer = await currentUser();
-  console.log("Current User", customer);
 
   if (!customer) {
     return null;

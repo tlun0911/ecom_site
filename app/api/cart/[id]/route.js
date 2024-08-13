@@ -5,7 +5,6 @@ export async function DELETE(request, { params }) {
   const itemId = request.headers.get("itemId");
   const userId = request.headers.get("userId");
 
-
   try {
     let res = await db.cartItem.delete({
       where: { id: itemId },
@@ -36,7 +35,6 @@ export async function GET(request, { params }) {
       },
     },
   });
-
 
   return Response.json(cart);
 }

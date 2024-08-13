@@ -7,7 +7,7 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 const AddToCartButton = ({ productId }) => {
   const addToCart = async () => {
     try {
-      const response = await fetch("https://ecom-site-steel-seven.vercel.app/api/cart/add", {
+      const response = await fetch("https://localhost:3000/api/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const AddToCartButton = ({ productId }) => {
       <ToastNotification />
       <SignedIn>
         <button
-          className="hover:bg-gray-900 bg-neutral-200 text-gray-900
+          className="hover:bg-gray-900 bg-white text-gray-900
           hover:text-neutral-200 border-2 border-gray-900
           font-bold py-2 px-4 rounded"
           onClick={addToCart}

@@ -2,12 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import RatingStars from "./RatingStars";
 
-const ProductCard = async ({ product, departmentName }) => {
+const ProductCard = async ({ product }) => {
   return (
     <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
       <div className="relative pb-48 overflow-hidden">
         <Image
-          src={product.imageURL}
+          src={product.images[0]}
           alt="Product"
           width={400}
           height={400}
@@ -16,7 +16,7 @@ const ProductCard = async ({ product, departmentName }) => {
       </div>
       <div className="p-4 flex flex-col flex-grow">
         <div className="h-full flex flex-col text-gray-900 flex-grow">
-          <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+          <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
           <div className="flex items-center mb-2">
             <RatingStars rating={product.rating} />
             <span className="ml-2 text-sm text-gray-900">
@@ -24,10 +24,8 @@ const ProductCard = async ({ product, departmentName }) => {
             </span>
           </div>
           <p className="text-gray-900 text-sm mb-4">
-            Department: {departmentName}
-          </p>
-          <p className="text-gray-900 text-sm mb-4 line-clamp-2">
-            {product.description}
+              Category:{" "}
+              <span className="capitalize">{product.category}</span>
           </p>
           <div className="flex justify-self-end items-center justify-between mt-auto">
             <p className="font-bold text-lg">${product.price}</p>
