@@ -51,7 +51,7 @@ const MobileMenu = () => {
           showMenu ? "flex" : "hidden"
         } absolute dark:bg-gray-900 z-10 inset-0 lg:hidden bg-white flex-col h-screen w-full`}
       >
-        <div className="flex items-center justify-end border-b border-gray-200 dark:border-gray-700 pb-4 p-4">
+        <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-4 p-4">
           <button
             onClick={() => setShowMenu(false)}
             aria-label="close menu"

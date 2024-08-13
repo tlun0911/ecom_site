@@ -50,7 +50,7 @@ const Header = async () => {
                 </li>
               </ul>
               <div className="flex  ">
-                <div className="w-full ml-2">
+                <div className=" ml-2">
                     <ClerkComponent>
                       <CartIcon />
                     </ClerkComponent>
