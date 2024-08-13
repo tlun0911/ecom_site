@@ -12,7 +12,7 @@ model Customer {
   clerkUserId  String   @unique
   name         String?
   email        String   @unique
-  imageURL     String?
+  imageUrl     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now())
   shoppingCart Cart?
