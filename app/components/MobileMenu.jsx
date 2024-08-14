@@ -84,11 +84,11 @@ const MobileMenu = () => {
           <ul className="flex flex-col space-y-6">
             <li>
               <div>
-              <Link
-                href="/"
-                className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
-              >
-                Home
+                <Link
+                  href="/"
+                  className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                >
+                  Home
                   <svg
                     className="fill-stroke text-black dark:text-white"
                     width={12}
@@ -105,8 +105,8 @@ const MobileMenu = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-              </Link>
-                </div>
+                </Link>
+              </div>
             </li>
             <li>
               <Link
@@ -165,14 +165,7 @@ const MobileMenu = () => {
         <div className="h-full flex items-end">
           <ul className="flex flex-col space-y-8 bg-gray-50 w-full py-10 p-4 dark:bg-gray-800">
             <SignedOut>
-              <SignInButton
-                appearance={{
-                  variables: {
-                    colorPrimary: "red",
-                    colorText: "white",
-                  },
-                }}
-              />
+              <SignInButton className="border-2 border-sky-500 text-sky-500 px-2 min-w-max" />
             </SignedOut>
             <SignedIn>
               <UserButton />

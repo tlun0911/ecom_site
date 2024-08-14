@@ -2,33 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
-import { db } from "@/app/lib/db";
 import RatingStars from "@/app/components/RatingStars";
 import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
 import getBase64 from "@/app/components/getBase64";
 
-export const dynamic = "force-dynamic";
-
-function getRandomDateWithinTwoWeeks() {
-  const currentDate = new Date();
-  const twoWeeksFromNow = new Date();
-  twoWeeksFromNow.setDate(currentDate.getDate() + 14);
-
-  const randomTime =
-    currentDate.getTime() +
-    Math.random() * (twoWeeksFromNow.getTime() - currentDate.getTime());
-  return new Date(randomTime);
-}
-
-export async function generateStaticParams() {
-  const products = await db.product.findMany();
-  return products.map((product) => product.id);
-}
+export const dynamic = "force-dymamic";
 
 const ProductPage = async ({ params }) => {
   const data = await fetch(`https://dummyjson.com/products/${params.id}`);
   const product = await data.json();
+
+  const image = product.images[0];
   const base64Img = await getBase64(product.images[0]);
 
   const reviews = product.reviews;
@@ -53,24 +38,25 @@ const ProductPage = async ({ params }) => {
         <h1 className="text-2xl lg:text-3xl font-bold px-2">
           {product.title} by {product.brand}
         </h1>
-        <div className="grid lg:grid-cols-2 mx-4 justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
             <Image
-              src={product.images[0]}
+              src={image}
               alt="Product"
-              width={600}
-              height={600}
               placeholder="blur"
               blurDataURL={base64Img}
-              className="border-2 border-gray-900 bg-white rounded-2xl"
+              width={600}
+              height={600}
+              quality={25}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="border-2 border-gray-900 bg-white rounded-2xl object-scale-down"
             />
           </div>
           <div className="flex flex-col p-4 space-y-4">
             <p className="text-xl font-medium">{product.description}</p>
             <p className="text-xl font-medium">Price: ${product.price}</p>
             <p>
-              Category:{" "}
-              <span className="capitalize">{product.category}</span>
+              Category: <span className="capitalize">{product.category}</span>
             </p>
             <div className="flex">
               <AddToCartButton productId={product.id} userId={userId} />

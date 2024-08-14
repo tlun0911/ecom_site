@@ -1,17 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import RatingStars from "./RatingStars";
+import getBase64 from "./getBase64";
 
 const ProductCard = async ({ product }) => {
+  const image = await getBase64(product.thumbnail);
+
   return (
     <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
-      <div className="relative pb-48 overflow-hidden">
+      <div className="relative pb-72 overflow-hidden">
         <Image
-          src={product.images[0]}
+          src={product.thumbnail}
           alt="Product"
-          width={400}
-          height={400}
-          className="object-cover absolute h-full w-full"
+          placeholder="blur"
+          blurDataURL={image}
+          width={300}
+          height={300}
+          quality={50}
+          sizes="(max-width: 768px) 100vw, 25vw"
+          className="object-cover absolute w-full"
         />
       </div>
       <div className="p-4 flex flex-col flex-grow">
@@ -24,8 +31,7 @@ const ProductCard = async ({ product }) => {
             </span>
           </div>
           <p className="text-gray-900 text-sm mb-4">
-              Category:{" "}
-              <span className="capitalize">{product.category}</span>
+            Category: <span className="capitalize">{product.category}</span>
           </p>
           <div className="flex justify-self-end items-center justify-between mt-auto">
             <p className="font-bold text-lg">${product.price}</p>

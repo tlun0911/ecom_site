@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProductCard from "../components/ProductCard";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const PRODUCTS_API_URL = "https://dummyjson.com/products";
 
@@ -20,6 +21,9 @@ const ProductsPage = async ({ searchParams }) => {
 
   return (
     <div className="lg:col-span-9">
+      <div className="my-4">
+        <Breadcrumbs />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products?.map((product) => {
           return <ProductCard key={product.id} product={product} />;
