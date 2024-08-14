@@ -1,7 +1,7 @@
-import Landing from './components/Landing';
+import Landing from "./components/Landing";
 import Cta from "./components/Cta";
-import Highlights from './components/Highlights';
-import Image from 'next/image';
+import Highlights from "./components/Highlights";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -19,7 +19,6 @@ export default function Home() {
               className="w-full h-full block"
               width={800}
               height={800}
-              
             />
             <Image
               src="https://i.ibb.co/94jQFsV/bench-accounting-nvzv-OPQW0gc-unsplash-1-1.png"
@@ -54,7 +53,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
     </main>
   );
 }

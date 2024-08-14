@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
 import RatingStars from "@/app/components/RatingStars";
 import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
 import getBase64 from "@/app/components/getBase64";
+import BackButton from "@/app/components/BackButton";
 
 export const dynamic = "force-dymamic";
 
@@ -13,8 +13,8 @@ const ProductPage = async ({ params }) => {
   const data = await fetch(`https://dummyjson.com/products/${params.id}`);
   const product = await data.json();
 
-  const image = product.images[0];
-  const base64Img = await getBase64(product.images[0]);
+  const image = product.thumbnail;
+  const base64Img = await getBase64(product.thumbnail);
 
   const reviews = product.reviews;
   const { sessionClaims } = auth();
@@ -47,9 +47,9 @@ const ProductPage = async ({ params }) => {
               blurDataURL={base64Img}
               width={600}
               height={600}
-              quality={25}
+              quality={100}
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="border-2 border-gray-900 bg-white rounded-2xl object-scale-down"
+              className="border-2 border-gray-900 bg-white rounded-2xl object-fill"
             />
           </div>
           <div className="flex flex-col p-4 space-y-4">
@@ -151,15 +151,8 @@ const ProductPage = async ({ params }) => {
                 </div>
               ))}
             </div>
-            <Link href="/products">
-              <button
-                className="hover:bg-gray-900 bg-white text-gray-900
-               hover:text-neutral-200 border-2 border-gray-900
-               font-bold py-2 px-4 rounded"
-              >
-                Go Back
-              </button>
-            </Link>
+            <BackButton />
+
           </div>
         </div>
       </div>

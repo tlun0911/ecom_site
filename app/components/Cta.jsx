@@ -1,11 +1,20 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import cta1 from "@/app/assets/cta1.png";
+import cta2 from "@/app/assets/cta2.png";
 const Cta4 = () => {
   return (
     <div className="mx-auto container py-12 px-4 md:px-6 2xl:px-0 flex justify-center items-center">
       <div className="flex flex-col lg:flex-row justify-center items-center lg:space-x-8 space-y-6 lg:space-y-0">
         <div className="relative">
-          <img
+          <Image
+            src={cta1}
+            alt="table-chair"
+            className="lg:block"
+            placeholder="blur"
+          />
+          {/* <img
             className="hidden lg:block"
             src="https://i.ibb.co/XXKZ7Pt/Group-1785.png"
             alt="table-chair"
@@ -19,7 +28,7 @@ const Cta4 = () => {
             className="sm:hidden"
             src="https://i.ibb.co/F0T98KC/Group-1785.png"
             alt="table-chair"
-          />
+          /> */}
           <div className="absolute bottom-4 sm:bottom-10 inset-x-4 sm:inset-x-10 p-6 bg-white flex flex-col justify-start items-start">
             <div>
               <p className="text-2xl font-semibold leading-6 text-gray-800">
@@ -72,7 +81,13 @@ const Cta4 = () => {
         </div>
 
         <div className="relative">
-          <img
+        <Image
+            src={cta2}
+            alt="chair-wood-fire"
+            className="lg:block"
+            placeholder="blur"
+          />
+          {/* <img
             className="hidden lg:block"
             src="https://i.ibb.co/0qHj658/Group-1786.png"
             alt="chair-wood-fire"
@@ -86,7 +101,7 @@ const Cta4 = () => {
             className="sm:hidden"
             src="https://i.ibb.co/ZVX8rPm/Group-1786.png"
             alt="chair-wood-fire"
-          />
+          /> */}
           <div className="absolute bottom-4 sm:bottom-10 inset-x-4 sm:inset-x-10 p-6 bg-white flex flex-col justify-start items-start">
             <div>
               <p className="text-2xl font-semibold leading-6 text-gray-800">

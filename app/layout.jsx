@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" className="bg-neutral-200">
-        <body className={montserrat.className}>
+        <body className={`${montserrat.className} antialiased`}>
           <Toaster />
           <Header />
           {children}
