@@ -8,7 +8,17 @@ import getBase64 from "@/app/components/getBase64";
 import BackButton from "@/app/components/BackButton";
 import Link from "next/link";
 
-export const dynamic = "force-dymamic";
+export async function generateStaticParams() {
+  const res = await fetch('https://dummyjson.com/products');
+  const data = await res.json();
+
+  // Assuming the products are in `data.products`, not directly in `data`
+  return data.products.map(product => ({
+    params: { id: product.id.toString() },
+  }));
+}
+
+
 
 const ProductPage = async ({ params }) => {
   const data = await fetch(`https://dummyjson.com/products/${params.id}`);
