@@ -86,6 +86,7 @@ const MobileMenu = () => {
               <div>
                 <Link
                   href="/"
+                  onClick={() => setShowMenu(false)}
                   className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
                 >
                   Home
@@ -111,6 +112,7 @@ const MobileMenu = () => {
             <li>
               <Link
                 href="/products"
+                onClick={() => setShowMenu(false)}
                 className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
                 All Products
@@ -136,10 +138,11 @@ const MobileMenu = () => {
             </li>
             <li>
               <Link
-                href="/favorites"
+                href="/categories"
+                onClick={() => setShowMenu(false)}
                 className="dark:text-white flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
-                Favorites
+                Categories
                 <div>
                   <svg
                     className="fill-stroke text-black dark:text-white"

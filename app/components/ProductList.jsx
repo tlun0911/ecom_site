@@ -1,8 +1,6 @@
 import ProductCard from "../components/ProductCard";
 
 const ProductList = async () => {
-    const data = await fetch("https://dummyjson.com/products?limit=12");
-    const { products } = await data.json();
 
     if(!data.ok) {
       return <div>Something went wrong fetching the data</div>

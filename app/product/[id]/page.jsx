@@ -6,6 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
 import getBase64 from "@/app/components/getBase64";
 import BackButton from "@/app/components/BackButton";
+import Link from "next/link";
 
 export const dynamic = "force-dymamic";
 
@@ -42,7 +43,8 @@ const ProductPage = async ({ params }) => {
     <div className="container mx-auto m-4 py-4">
       <div className="flex flex-col items-center justify-center space-y-8">
         <h1 className="text-2xl lg:text-3xl font-bold px-2">
-          {product.title}{product.brand ? ` by ${product.brand}` : ""}
+          {product.title}
+          {product.brand ? ` by ${product.brand}` : ""}
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
@@ -62,7 +64,13 @@ const ProductPage = async ({ params }) => {
             <p className="text-xl font-medium">{product.description}</p>
             <p className="text-xl font-medium">Price: ${product.price}</p>
             <p>
-              Category: <span className="capitalize">{product.category}</span>
+              Category:{"  "}
+              <Link
+                href={`../categories/${product.category}`}
+                className="hover:font-bold"
+              >
+                <span className="capitalize">{product.category}</span>
+              </Link>
             </p>
             {disabled ? (
               <button
@@ -85,6 +93,18 @@ const ProductPage = async ({ params }) => {
                 <span className="lowercase">{product.shippingInformation}</span>
               </span>
             </div>
+            <div className="border-2 border-gray-900 p-4 rounded-md space-y-4">
+              <h2 className="text-xl text-gray-900 font-bold">
+                Product Dimensions:
+              </h2>
+              <p className="text-lg text-gray-900">
+                {product.dimensions.height}h x {product.dimensions.width}w x{" "}
+                {product.dimensions.depth}d inches
+              </p>
+              <p className="text-lg text-gray-900">
+                Weight: {product.weight} lbs
+              </p>
+            </div>
             <div className="flex flex-col space-y-4">
               <h2 className="text-2xl font-bold">Customer Reviews</h2>
               <div className="flex items-center">
@@ -94,7 +114,7 @@ const ProductPage = async ({ params }) => {
               {reviews.map((review) => (
                 <div
                   key={review.reviewerName}
-                  className="flex flex-col border-2 bg-white p-2 border-gray-900 space-y-2 rounded-md"
+                  className="flex flex-col border-2 bg-white p-4 border-gray-900 space-y-2 rounded-md"
                 >
                   <p className="text-lg font-medium">
                     {'"'}

@@ -14,12 +14,14 @@ const Header = async () => {
           {/* For large screens */}
           <div className="dark:bg-gray-900 bg-gray-50 px-6 py-6">
             <div className="container mx-auto flex items-center justify-between">
+              <Link href="/">
               <h1
                 className="md:w-2/12 text-2xl cursor-pointer text-gray-800 dark:text-white"
                 aria-label="shop Ease"
               >
                 <span className="text-sky-400">shop</span>Ease
               </h1>
+              </Link>
               <ul
                 id="links-list"
                 className="hidden w-7/12 md:flex items-center justify-center space-x-8"

@@ -6,6 +6,25 @@ import getBase64 from "./getBase64";
 const ProductCard = async ({ product }) => {
   const image = await getBase64(product.thumbnail);
 
+  let availability = product.availabilityStatus;
+  let availPlaceholder;
+
+  if (availability === "Out of Stock") {
+    availPlaceholder = (
+      <span className="text-white bg-red-500 text-center ml-auto border-2 px-1 h-fit rounded-md">
+        {availability}
+      </span>
+    );
+  } else if (availability === "Low Stock") {
+    availPlaceholder = (
+      <span className="text-white ml-auto text-center border-2 bg-yellow-500 px-1 h-fit rounded-md">
+        {availability}
+      </span>
+    );
+  } else {
+    availPlaceholder = null;
+  }
+
   return (
     <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
       <div className="relative pb-72 overflow-hidden">
@@ -18,7 +37,7 @@ const ProductCard = async ({ product }) => {
           height={300}
           quality={50}
           sizes="(max-width: 768px) 100vw, 25vw"
-          className="object-cover absolute w-full"
+          className="object-scale-down object-top w-full h-auto absolute"
         />
       </div>
       <div className="p-4 flex flex-col flex-grow">
@@ -30,9 +49,12 @@ const ProductCard = async ({ product }) => {
               {product.rating}/5
             </span>
           </div>
-          <p className="text-gray-900 text-sm mb-4">
-            Category: <span className="capitalize">{product.category}</span>
-          </p>
+          <div className="flex items-center mb-4">
+            <p className="text-gray-900 text-sm">
+              Category: <span className="capitalize">{product.category}</span>
+            </p>
+            {availPlaceholder}
+          </div>
           <div className="flex justify-self-end items-center justify-between mt-auto">
             <p className="font-bold text-lg">${product.price}</p>
             <Link href={`/product/${product.id}`}>
