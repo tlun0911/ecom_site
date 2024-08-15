@@ -3,28 +3,23 @@
 import React from "react";
 import ToastNotification from "./ToastNotification";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { addToCart } from "@/app/actions/addToCart";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 
 const AddToCartButton = ({ productId }) => {
-  const addToCart = async () => {
-    try {
-      const response = await fetch("https://localhost:3000/api/cart/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId }),
-      });
+  const router = useRouter(); // Initialize the router
 
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
-      } else {
-        const data = await response.json();
-        console.log("Product added to cart:", data);
-        localStorage.setItem("toast", JSON.stringify("Item added to cart"));
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
+  const handleAddToCart = async () => {
+    const response = await addToCart(productId);
+    console.log("Response", response);
+
+    if (response.success) {
+      toast(response.message, { type: "success" });
+      router.refresh(); // Refresh the page after a successful add to cart
+    } else {
+      toast(response.message, { type: "error" });
     }
   };
 
@@ -36,7 +31,7 @@ const AddToCartButton = ({ productId }) => {
           className="hover:bg-gray-900 bg-white text-gray-900
           hover:text-neutral-200 border-2 border-gray-900
           font-bold py-2 px-4 rounded"
-          onClick={addToCart}
+          onClick={handleAddToCart}
         >
           Order Now
         </button>

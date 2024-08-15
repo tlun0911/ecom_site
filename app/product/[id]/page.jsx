@@ -21,22 +21,28 @@ const ProductPage = async ({ params }) => {
   const userId = sessionClaims?.userId;
 
   let in_stock;
+  let disabled;
 
-  if (product.stock > 0) {
+  if (product.availabilityStatus === "In Stock") {
     in_stock = (
       <span className="text-gray-900 text-sm">
         In stock, {product.stock} units available
       </span>
     );
   } else {
-    in_stock = <span className="text-gray-900 text-sm">Out of stock</span>;
+    in_stock = (
+      <span className="text-red-600 rounded-md text-center text-sm border-2 border-red-600 p-1">
+        Out of stock
+      </span>
+    );
+    disabled = true;
   }
 
   return (
     <div className="container mx-auto m-4 py-4">
       <div className="flex flex-col items-center justify-center space-y-8">
         <h1 className="text-2xl lg:text-3xl font-bold px-2">
-          {product.title} by {product.brand}
+          {product.title}{product.brand ? ` by ${product.brand}` : ""}
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
@@ -58,9 +64,20 @@ const ProductPage = async ({ params }) => {
             <p>
               Category: <span className="capitalize">{product.category}</span>
             </p>
-            <div className="flex">
-              <AddToCartButton productId={product.id} userId={userId} />
-            </div>
+            {disabled ? (
+              <button
+                className="hover:bg-gray-600 bg-white text-gray-600
+              hover:text-neutral-200 border-2 border-gray-600
+              font-bold py-2 px-4 rounded"
+                disabled
+              >
+                Out of Stock
+              </button>
+            ) : (
+              <div className="flex">
+                <AddToCartButton productId={product.id} userId={userId} />
+              </div>
+            )}
             <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md bg-white">
               {in_stock}
               <span className="text-gray-900 text-sm">
@@ -152,7 +169,6 @@ const ProductPage = async ({ params }) => {
               ))}
             </div>
             <BackButton />
-
           </div>
         </div>
       </div>

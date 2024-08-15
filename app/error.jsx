@@ -10,7 +10,7 @@ export default function Error({ error, reset }) {
 
   return (
     <div className="container mx-6 mt-10 space-y-8">
-      <h2 className="text-2xl text-gray-900 font-medium">Whoops, something went wrong!</h2>
+      <h2 className="text-xl lg:text-2xl text-gray-900 font-medium">Whoops, something went wrong!</h2>
       <button
         className="bg-neutral-200 text-gray-900 font-bold py-2 px-4 rounded border-2 border-gray-900"
         onClick={

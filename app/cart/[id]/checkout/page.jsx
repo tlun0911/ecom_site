@@ -26,16 +26,14 @@ const CheckoutPage = () => {
     setFormData({
       ...formData,
       [name]: value,
-      [address]: value,
-      [phone]: value,
-      [email]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form data: ", formData);
+    
     const response = await handleCheckout(formData);
+
     if (response.success) {
       setFormData({
         name: "",

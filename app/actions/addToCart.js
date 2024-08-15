@@ -7,7 +7,6 @@ import { auth } from "@clerk/nextjs/server";
 export async function addToCart (productId) {
     const { sessionClaims } = auth();
     const userId = sessionClaims?.userId;
-    console.log("UserID", userId);
 
     if (userId) {
         try {
@@ -26,12 +25,13 @@ export async function addToCart (productId) {
           const cartItem = await db.cartItem.create({
             data: {
               shoppingCartId: cart.id,
-              productId,
+              productId: productId.toString(),
               quantity: 1,
             },
           });
+          return {success: true, message: "Item added to cart"}; 
         } catch (error) {
-            console.error("Error adding item to cart", error);
+            return {success: false, message: "Failed to add item to cart"};
         }
     }
 

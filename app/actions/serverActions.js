@@ -1,4 +1,4 @@
-'use server';
+"use server";
 import { db } from "@/app/lib/db";
 import { revalidatePath } from "next/cache";
 
@@ -7,41 +7,38 @@ export async function handleCheckout(formData) {
   const cart = await db.cart.findUnique({
     where: { id: cartId },
     include: {
-      items: {
-        include: {
-          product: {
-            select: { id: true, name: true, price: true, imageURL: true },
-          },
-        },
-      },
+      items: true, // Include all fields of CartItem
     },
   });
   console.log("Cart: ", cart);
 
   // Basic validation
   if (!name || !address || !phone || !email) {
-    return { success: false, message: 'All fields are required.' };
+    return { success: false, message: "All fields are required." };
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9]{10}$/;
 
   if (!emailRegex.test(email)) {
-    return { success: false, message: 'Invalid email format.' };
+    return { success: false, message: "Invalid email format." };
   }
 
   if (!phoneRegex.test(phone)) {
-    return { success: false, message: 'Invalid phone number format.' };
+    return { success: false, message: "Invalid phone number format." };
   }
 
   // Clear user cart logic here
   // Assuming you have a function clearUserCart() that clears the cart
   try {
     await clearUserCart(cartId);
-    revalidatePath('/cart');
-    return { success: true, message: 'Your order has been placed!' };
+    revalidatePath("/cart");
+    return { success: true, message: "Your order has been placed!" };
   } catch (error) {
-    return { success: false, message: 'An error occurred during checkout, please try again.' };
+    return {
+      success: false,
+      message: "An error occurred during checkout, please try again.",
+    };
   }
 }
 
@@ -59,10 +56,9 @@ async function clearUserCart(cartId) {
       where: { id: cartId },
     });
 
-    console.log('User cart cleared.');
+    console.log("User cart cleared.");
   } catch (error) {
-    console.error('Error clearing cart:', error);
+    console.error("Error clearing cart:", error);
     throw error;
   }
 }
-

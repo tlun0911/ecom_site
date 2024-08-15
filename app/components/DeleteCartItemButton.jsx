@@ -1,9 +1,14 @@
 "use client";
 
 import React from "react";
+import { deleteCartItem } from "@/app/actions/deleteCartItem";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const DeleteCartItemButton = ({ itemId, cartId }) => {
-  const deleteCartItem = async () => {
+  const router = useRouter(); // Initialize
+
+  const handleDeleteCartItem = async () => {
     const userConfirmed = window.confirm(
       "Are you sure you want to delete this item from your cart?"
     );
@@ -12,30 +17,20 @@ const DeleteCartItemButton = ({ itemId, cartId }) => {
       return;
     }
 
-    try {
-      let res = await fetch(`https://ecom-site-steel-seven.vercel.app/api/cart/${cartId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          itemId: itemId,
-        },
-      });
+    const response = await deleteCartItem(itemId, cartId);
 
-      if (res.status === 200) {
-        localStorage.setItem('toast', JSON.stringify("Item deleted from cart")); // Set flag in local storage
-        window.location.reload(); // Reload the page after successful deletion
-      } else {
-        console.error("Failed to delete item:", res.statusText);
-      }
-    } catch (error) {
-      console.error("Error deleting cart item:", error);
+    if (response.success) {
+      toast(response.message, { type: "success" });
+      router.refresh(); // Refresh the page after a successful add to cart
+    } else {
+      toast(response.message, { type: "error" });
     }
   };
   return (
     <button
       className="bg-red-500 text-white px-4 py-2 rounded"
       onClick={() => {
-        deleteCartItem();
+        handleDeleteCartItem();
       }}
     >
       Delete

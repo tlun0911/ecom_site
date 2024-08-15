@@ -16,26 +16,25 @@ export const CartPage = async ({ params }) => {
     where: { id: cartId, customerId: userId },
     include: {
       items: {
-        include: {
-          product: {
-            select: { id: true, name: true, price: true, imageURL: true },
-          },
-        },
+        select: { productId: true, id: true },
       },
     },
   });
 
-  let products =
-    cart?.items.map((product) => {
-      return {
-        name: product.product.name,
-        price: product.product.price,
-        quantity: product.quantity,
-        imageURL: product.product.imageURL,
-        cartItemId: product.id,
-        productId: product.product.id,
-      };
-    }) || [];
+  let products = cart?.items;
+
+  // Fetch product details for each productId
+  const productDetails = await Promise.all(
+    products.map(async (product) => {
+      const res = await fetch(
+        `https://dummyjson.com/products/${product.productId}`
+      );
+      let data = await res.json();
+      let newData = {...data, "cartItemId": product.id, "quantity": 1}
+      
+      return newData;
+    })
+  );
 
   if (products.length === 0) {
     return (
@@ -54,7 +53,7 @@ export const CartPage = async ({ params }) => {
     );
   }
 
-  let total = products.reduce((acc, product) => {
+  let total = productDetails.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
 
@@ -67,26 +66,23 @@ export const CartPage = async ({ params }) => {
         <h1 className="text-3xl font-bold mt-4">Cart for {userName}</h1>
 
         <ul className="space-y-6 w-4/5 md:w-1/2">
-          {products.map((product) => (
+          {productDetails.map((product) => (
             <li
               className="flex flex-col lg:flex-row lg:space-x-10 justify-between items-center 
                 border-2 border-gray-900 rounded-md lg:min-w-max space-y-4 lg:space-y-0
                 p-4 flex-grow"
-              key={product.name}
+              key={product.cartItemId}
             >
               <Image
-                src={product.imageURL}
-                alt={product.name}
+                src={product.thumbnail}
+                alt={product.title}
                 width={100}
                 height={100}
                 className="object-contain"
               />
               <div className="flex flex-col min-w-max lg:flex-grow space-y-2">
-                <Link
-                  href={`/products/${product.productId}`}
-                  key={product.name}
-                >
-                  <p className="hover:font-bold">{product.name}</p>
+                <Link href={`/products/${product.productId}`} key={product.id}>
+                  <p className="hover:font-bold">{product.title}</p>
                 </Link>
 
                 <p>Price - ${product.price}</p>
