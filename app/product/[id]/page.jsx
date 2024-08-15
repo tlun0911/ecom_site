@@ -9,7 +9,7 @@ import BackButton from "@/app/components/BackButton";
 import Link from "next/link";
 
 export async function generateStaticParams() {
-  const res = await fetch('https://dummyjson.com/products');
+  const res = await fetch('https://dummyjson.com/products?limit=0');
   const data = await res.json();
 
   // Assuming the products are in `data.products`, not directly in `data`
