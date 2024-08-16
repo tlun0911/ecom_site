@@ -6,34 +6,24 @@ import { format } from "date-fns";
 import BackButton from "@/app/components/BackButton";
 import Link from "next/link";
 import getBase64 from "@/app/components/getBase64";
-
-async function fetchAllProducts() {
-  const res = await fetch('https://dummyjson.com/products?limit=0');
-  const data = await res.json();
-  return data.products;
-}
+import fetchProducts from "@/app/lib/fetchProducts";
 
 export async function generateStaticParams() {
-  const products = await fetchAllProducts();
-  return products.map(product => ({
+  const products = await fetchProducts();
+  return products.map((product) => ({
     id: product.id.toString(),
   }));
 }
 
-
 const ProductPage = async ({ params }) => {
+  const products = await fetchProducts();
+  const product = await products.find((p) => p.id.toString() === params.id);
 
-  const products = await fetchAllProducts();
-  const product = products.find(p => p.id.toString() === params.id);
-
-  const image = product.thumbnail;
 
   let in_stock;
   let disabled;
 
   const reviews = product.reviews;
-  const base64Img = await getBase64(product.thumbnail);
-
 
   if (product.availabilityStatus === "In Stock") {
     in_stock = (
@@ -41,14 +31,21 @@ const ProductPage = async ({ params }) => {
         In stock, {product.stock} units available
       </span>
     );
-  } else {
+  } else if (product.availabilityStatus === "Out of Stock") {
     in_stock = (
       <span className="text-red-600 rounded-md text-center text-sm border-2 border-red-600 p-1">
         Out of stock
       </span>
     );
     disabled = true;
+  } else {
+    in_stock = (
+      <span className="text-yellow-500 rounded-md text-center text-sm border-2 border-yellow-500 p-1">
+        Limited stock
+      </span>
+    );
   }
+
 
   return (
     <div className="container mx-auto m-4 py-4">
@@ -60,10 +57,9 @@ const ProductPage = async ({ params }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
             <Image
-              src={image}
+              src={`/product-images/${params.id}-0-1.png`}
               alt="Product"
               placeholder="blur"
-              blurDataURL={base64Img}
               width={600}
               height={600}
               quality={100}
@@ -94,7 +90,7 @@ const ProductPage = async ({ params }) => {
               </button>
             ) : (
               <div className="flex">
-                <AddToCartButton productId={product.id}  />
+                <AddToCartButton productId={product.id} />
               </div>
             )}
             <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md bg-white">

@@ -4,7 +4,6 @@ import RatingStars from "./RatingStars";
 import getBase64 from "./getBase64";
 
 const ProductCard = async ({ product }) => {
-  const image = await getBase64(product.thumbnail);
 
   let availability = product.availabilityStatus;
   let availPlaceholder;
@@ -29,12 +28,9 @@ const ProductCard = async ({ product }) => {
     <div className="flex flex-col h-full rounded-md overflow-hidden shadow-md hover:shadow-lg bg-gray-100">
       <div className="relative pb-72 overflow-hidden">
         <Image
-          src={product.thumbnail}
+          src={`/product-images/${product.id}-thumbnail.png`}
           alt="Product"
           placeholder="blur"
-          blurDataURL={image}
-          width={300}
-          height={300}
           quality={50}
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-scale-down object-top w-full h-auto absolute"
