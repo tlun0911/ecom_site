@@ -2,37 +2,38 @@ import React from "react";
 import Image from "next/image";
 import AddToCartButton from "@/app/components/AddToCartButton";
 import RatingStars from "@/app/components/RatingStars";
-import { auth } from "@clerk/nextjs/server";
 import { format } from "date-fns";
-import getBase64 from "@/app/components/getBase64";
 import BackButton from "@/app/components/BackButton";
 import Link from "next/link";
+import getBase64 from "@/app/components/getBase64";
 
-export async function generateStaticParams() {
+async function fetchAllProducts() {
   const res = await fetch('https://dummyjson.com/products?limit=0');
   const data = await res.json();
+  return data.products;
+}
 
-  // Assuming the products are in `data.products`, not directly in `data`
-  return data.products.map(product => ({
-    params: { id: product.id.toString() },
+export async function generateStaticParams() {
+  const products = await fetchAllProducts();
+  return products.map(product => ({
+    id: product.id.toString(),
   }));
 }
 
 
-
 const ProductPage = async ({ params }) => {
-  const data = await fetch(`https://dummyjson.com/products/${params.id}`);
-  const product = await data.json();
+
+  const products = await fetchAllProducts();
+  const product = products.find(p => p.id.toString() === params.id);
 
   const image = product.thumbnail;
-  const base64Img = await getBase64(product.thumbnail);
-
-  const reviews = product.reviews;
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId;
 
   let in_stock;
   let disabled;
+
+  const reviews = product.reviews;
+  const base64Img = await getBase64(product.thumbnail);
+
 
   if (product.availabilityStatus === "In Stock") {
     in_stock = (
@@ -93,7 +94,7 @@ const ProductPage = async ({ params }) => {
               </button>
             ) : (
               <div className="flex">
-                <AddToCartButton productId={product.id} userId={userId} />
+                <AddToCartButton productId={product.id}  />
               </div>
             )}
             <div className="flex flex-col border-2 border-gray-900 p-2 rounded-md bg-white">
