@@ -30,8 +30,9 @@ const ProductCard = async ({ product }) => {
         <Image
           src={`/product-images/${product.id}-thumbnail.png`}
           alt="Product"
-          placeholder="blur"
           quality={50}
+          width={300}
+          height={300}
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-scale-down object-top w-full h-auto absolute"
         />

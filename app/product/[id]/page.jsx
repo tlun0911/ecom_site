@@ -5,7 +5,6 @@ import RatingStars from "@/app/components/RatingStars";
 import { format } from "date-fns";
 import BackButton from "@/app/components/BackButton";
 import Link from "next/link";
-import getBase64 from "@/app/components/getBase64";
 import fetchProducts from "@/app/lib/fetchProducts";
 
 export async function generateStaticParams() {
@@ -13,6 +12,21 @@ export async function generateStaticParams() {
   return products.map((product) => ({
     id: product.id.toString(),
   }));
+}
+
+export function ProductImage({id, alt}) {
+
+  return (
+    <Image
+      src={`/product-images/${id}-0-1.png`}
+      alt={alt}
+      width={600}
+      height={600}
+      quality={75}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      className="border-2 border-gray-900 bg-white rounded-2xl object-fill"
+    />
+  );
 }
 
 const ProductPage = async ({ params }) => {
@@ -56,16 +70,7 @@ const ProductPage = async ({ params }) => {
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 mx-4 justify-center">
           <div className="relative">
-            <Image
-              src={`/product-images/${params.id}-0-1.png`}
-              alt="Product"
-              placeholder="blur"
-              width={600}
-              height={600}
-              quality={100}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="border-2 border-gray-900 bg-white rounded-2xl object-fill"
-            />
+            <ProductImage id={product.id} alt={product.title} />
           </div>
           <div className="flex flex-col p-4 space-y-4">
             <p className="text-xl font-medium">{product.description}</p>

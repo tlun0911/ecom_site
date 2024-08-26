@@ -29,7 +29,7 @@ const Cta4 = () => {
               <div className="flex justify-between items-center space-x-2">
                 <Link
                   className="text-base font-medium leading-none hover:underline text-gray-800"
-                  href="/favorites"
+                  href="/products"
                 >
                   Explore
                 </Link>
