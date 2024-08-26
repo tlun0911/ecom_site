@@ -13,6 +13,7 @@ const Landing = () => {
         fill
         sizes="100vw"
         className="object-cover object-center w-full h-full -z-10 translate-y-14"
+        priority
       />
 
       <div className="flex flex-col space-y-6 place-content-center items-center h-full w-full">
