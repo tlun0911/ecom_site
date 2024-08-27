@@ -1,9 +1,12 @@
 "use client";
 
 import ReactDOM from "react-dom";
+import { useEffect } from "react";
 
 const PreloadResources = () => {
-  ReactDOM.preload("/ecom-bg.jpg", {as: "image"});
+  useEffect(() => {
+    ReactDOM.preload("/ecom-bg.jpg", { as: "image" });
+  }, []);
 
   return null;
 }
