@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import PreloadResources from "./components/PreloadResources";
 
 const montserrat = Montserrat({
   weight: ["400", "700", "800"],
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" className="bg-neutral-200">
+        <PreloadResources />
         <body
           className={`${montserrat.className} antialiased overflow-x-hidden`}
         >
@@ -28,8 +30,6 @@ export default function RootLayout({ children }) {
                 toast: "bg-gray-900",
                 error: "text-red-500",
                 success: "text-green-400",
-
- 
               },
             }}
           />
