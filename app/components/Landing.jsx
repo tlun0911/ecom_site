@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import backgroundImage from "@/app/assets/ecom_bg.jpg";
+import backgroundImage from "@/public/ecom_bg.jpg";
 
 const Landing = () => {
   return (
@@ -9,7 +9,7 @@ const Landing = () => {
         src={backgroundImage}
         alt="background image"
         placeholder="blur"
-        quality={100}
+        quality={50}
         fill
         sizes="100vw"
         className="object-cover object-center w-full h-full -z-10 translate-y-14"

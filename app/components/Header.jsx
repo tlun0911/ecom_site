@@ -5,7 +5,7 @@ import ClerkComponent from "./ClerkComponent";
 import CartIcon from "./CartIcon";
 
 const Header = async () => {
-  checkCustomer();
+  await checkCustomer();
 
   return (
     <div className="dark:bg-gray-900 sticky top-0 z-50 max-w-screen ">
