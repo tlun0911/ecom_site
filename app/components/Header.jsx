@@ -1,11 +1,16 @@
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import { checkCustomer } from "@/app/lib/checkCustomer";
+import { auth, currentUser } from '@clerk/nextjs/server'
 import ClerkComponent from "./ClerkComponent";
 import CartIcon from "./CartIcon";
 
 const Header = async () => {
-  await checkCustomer();
+  const { userId } = auth();
+
+  if(userId){
+    checkCustomer();
+  }
 
   return (
     <div className="dark:bg-gray-900 sticky top-0 z-50 max-w-screen ">

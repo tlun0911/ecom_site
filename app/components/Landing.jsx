@@ -4,8 +4,8 @@ import backgroundImage from "@/public/ecom_bg.jpg";
 
 const Landing = () => {
   return (
-    <div className="h-screen max-w-screen overflow-hidden ">
-      <Image
+    <div className="h-screen max-w-screen bg-landing bg-cover overflow-hidden ">
+      {/* <Image
         src={backgroundImage}
         alt="background image"
         placeholder="blur"
@@ -14,7 +14,7 @@ const Landing = () => {
         sizes="100vw"
         className="object-cover object-center w-full h-full -z-10 translate-y-14"
         priority
-      />
+      /> */}
 
       <div className="flex flex-col space-y-6 place-content-center items-center h-full w-full">
         <h1 className="text-6xl text-white font-bold pl-6">
